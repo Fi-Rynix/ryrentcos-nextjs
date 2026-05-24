@@ -1,9 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 
 function formatIDR(value: number) {
-  return `IDR ${value.toLocaleString("id-ID")}`;
+  // format manual biar konsisten di server & client (hindari hydration mismatch)
+  return `IDR ${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
 }
 
 
@@ -579,114 +581,6 @@ function CtaSection() {
   );
 }
 
-function Footer() {
-  return (
-    <footer className="w-full border-t-8 border-brand-red bg-brand-base">
-      <Container>
-        <div className="grid gap-10 py-12 md:grid-cols-4">
-          <div>
-            <h3 className="mb-4 text-xl font-bold text-brand-red">Features</h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-base hover:underline">
-                  Explore Catalog
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-base hover:underline">
-                  Rental Costume
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-base hover:underline">
-                  Rental Wig
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-base hover:underline">
-                  Tutorial Cosplay
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-base hover:underline">
-                  News & Article
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="mb-4 text-xl font-bold text-brand-red">
-              Sound Your Idea!
-            </h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-base hover:underline">
-                  Lapor Bug
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-base hover:underline">
-                  Feedback
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="mb-4 text-xl font-bold text-brand-red">
-              Terms of Service
-            </h3>
-            <ul className="space-y-2">
-              <li>
-                <a href="#" className="text-base hover:underline">
-                  Terms and Conditions
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-base hover:underline">
-                  Privacy Policy
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-base hover:underline">
-                  Return Policy
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="mb-4 text-xl font-bold text-brand-red">
-              Metode Pembayaran
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              <span className="rounded bg-white px-3 py-1 text-xs font-bold text-zinc-700 shadow-sm">
-                BCA
-              </span>
-              <span className="rounded bg-white px-3 py-1 text-xs font-bold text-zinc-700 shadow-sm">
-                BNI
-              </span>
-              <span className="rounded bg-white px-3 py-1 text-xs font-bold text-zinc-700 shadow-sm">
-                MANDIRI
-              </span>
-              <span className="rounded bg-white px-3 py-1 text-xs font-bold text-zinc-700 shadow-sm">
-                QRIS
-              </span>
-              <span className="rounded bg-white px-3 py-1 text-xs font-bold text-zinc-700 shadow-sm">
-                PAYPAL
-              </span>
-              <span className="rounded bg-white px-3 py-1 text-xs font-bold text-zinc-700 shadow-sm">
-                OVO
-              </span>
-            </div>
-          </div>
-        </div>
-      </Container>
-    </footer>
-  );
-}
-
 /* ============================================================
    PAGE
    ============================================================ */
@@ -705,7 +599,6 @@ export default function LandingPage() {
       <BenefitsSection />
       <Divider />
       <CtaSection />
-      <Footer />
     </>
   );
 }
