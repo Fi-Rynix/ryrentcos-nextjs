@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 function formatIDR(value: number) {
   // format manual biar konsisten di server & client (hindari hydration mismatch)
@@ -13,7 +13,7 @@ function formatIDR(value: number) {
 // component
 function Container({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 md:px-6">{children}</div>
+    <div className="mx-auto w-full max-w-[1120px] px-4 md:px-6">{children}</div>
   );
 }
 
@@ -30,14 +30,16 @@ function Divider() {
 function Section({
   children,
   size = "default",
+  id,
 }: {
   children: React.ReactNode;
   size?: "small" | "default";
+  id?: string;
 }) {
   const padding = size === "small" ? "py-8" : "py-12 md:py-16";
 
   return (
-    <section className={`w-full ${padding}`}>
+    <section id={id} className={`w-full scroll-mt-[88px] ${padding}`}>
       <Container>{children}</Container>
     </section>
   );
@@ -155,74 +157,64 @@ function BenefitCard({
 
 // section
 function HeroCarousel() {
-  const [current, setCurrent] = useState(0);
-  const total = 5;
+  const total = 7;
+  const validSteps = 5;
+  const [step, setStep] = useState(2);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerW, setContainerW] = useState(0);
 
-  const prev = () => setCurrent((c) => (c - 1 + total) % total);
-  const next = () => setCurrent((c) => (c + 1) % total);
+  const itemW = 535;
+  const gap = 12;
+  const stepPx = itemW + gap;
+  const centerIndex = step + 1;
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    setContainerW(el.offsetWidth);
+    const ro = new ResizeObserver(() => setContainerW(el.offsetWidth));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const offsetPx = containerW / 2 - itemW / 2 - centerIndex * stepPx;
+
+  const prev = () => setStep((s) => (s - 1 + validSteps) % validSteps);
+  const next = () => setStep((s) => (s + 1) % validSteps);
 
   return (
-    <section className="relative w-full overflow-hidden bg-gradient-to-r from-red-950 to-brand-red-soft">
-      <div className="relative h-64 md:h-80">
+    <section className="relative w-full overflow-hidden bg-brand-red-soft py-8">
+      <div ref={containerRef} className="relative h-[305px]">
         <div
-          className="flex h-full transition-transform duration-500 ease-out"
-          style={{ transform: `translateX(-${current * 100}%)` }}
+          className="absolute left-0 flex h-full transition-transform duration-500 ease-out"
+          style={{ transform: `translateX(${offsetPx}px)`, gap: `${gap}px` }}
         >
-          <div className="relative flex h-full w-full shrink-0 items-center justify-center px-8">
-            <div className="flex max-w-3xl flex-col items-center gap-4 text-center text-white">
-              <h2 className="font-baloo whitespace-pre-line text-3xl font-extrabold leading-tight md:text-5xl">
-                BRAND NEW PRODUCT{"\n"}RENT DISC 30%
-              </h2>
+          {Array.from({ length: total }, (_, i) => (
+            <div
+              key={i}
+              className="relative shrink-0 overflow-hidden rounded-xl"
+              style={{ width: `${itemW}px`, height: "305px" }}
+            >
+              <Image
+                src={`/images/carousel/carousel${i + 1}.png`}
+                alt={`Slide ${i + 1}`}
+                fill
+                className="object-cover"
+                priority={i === 1}
+              />
             </div>
-          </div>
-
-          <div className="relative flex h-full w-full shrink-0 items-center justify-center px-8">
-            <div className="flex max-w-3xl flex-col items-center gap-4 text-center text-white">
-              <h2 className="font-baloo whitespace-pre-line text-3xl font-extrabold leading-tight md:text-5xl">
-                BUKANKAH INI MY?
-              </h2>
-            </div>
-          </div>
-
-          <div className="relative flex h-full w-full shrink-0 items-center justify-center px-8">
-            <div className="flex max-w-3xl flex-col items-center gap-4 text-center text-white">
-              <h2 className="font-baloo whitespace-pre-line text-3xl font-extrabold leading-tight md:text-5xl">
-                MIKU EXPO 2025 ASIA
-              </h2>
-            </div>
-          </div>
-
-          <div className="relative flex h-full w-full shrink-0 items-center justify-center px-8">
-            <div className="flex max-w-3xl flex-col items-center gap-4 text-center text-white">
-              <h2 className="font-baloo whitespace-pre-line text-3xl font-extrabold leading-tight md:text-5xl">
-                NEW ARRIVALS
-              </h2>
-            </div>
-          </div>
-
-          <div className="relative flex h-full w-full shrink-0 items-center justify-center px-8">
-            <div className="flex max-w-3xl flex-col items-center gap-4 text-center text-white">
-              <h2 className="font-baloo whitespace-pre-line text-3xl font-extrabold leading-tight md:text-5xl">
-                LIMITED EDITION
-              </h2>
-            </div>
-          </div>
+          ))}
         </div>
 
         <button
           type="button"
           onClick={prev}
           aria-label="Previous slide"
-          className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full border-4 border-brand-red-soft bg-white p-2 text-brand-red shadow-lg hover:scale-105 md:left-4"
+          disabled={false}
+          className="absolute left-4 top-1/2 z-10 -translate-y-1/2 rounded-full border-4 border-brand-red-soft bg-white p-2 text-brand-red shadow-lg transition hover:scale-105"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M15 18l-6-6 6-6"
-              stroke="currentColor"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+            <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
 
@@ -230,61 +222,27 @@ function HeroCarousel() {
           type="button"
           onClick={next}
           aria-label="Next slide"
-          className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full border-4 border-brand-red-soft bg-white p-2 text-brand-red shadow-lg hover:scale-105 md:right-4"
+          disabled={false}
+          className="absolute right-4 top-1/2 z-10 -translate-y-1/2 rounded-full border-4 border-brand-red-soft bg-white p-2 text-brand-red shadow-lg transition hover:scale-105"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path
-              d="M9 18l6-6-6-6"
-              stroke="currentColor"
-              strokeWidth="3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+            <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
+      </div>
 
-        <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
+      <div className="mt-4 flex justify-center gap-2">
+        {Array.from({ length: validSteps }, (_, i) => (
           <button
+            key={i}
             type="button"
-            onClick={() => setCurrent(0)}
-            aria-label="Go to slide 1"
+            onClick={() => setStep(i)}
+            aria-label={`Go to slide ${i + 2}`}
             className={`h-2 rounded-full transition-all ${
-              current === 0 ? "w-8 bg-white" : "w-2 bg-white/50"
+              step === i ? "w-8 bg-white" : "w-2 bg-white/50"
             }`}
           />
-          <button
-            type="button"
-            onClick={() => setCurrent(1)}
-            aria-label="Go to slide 2"
-            className={`h-2 rounded-full transition-all ${
-              current === 1 ? "w-8 bg-white" : "w-2 bg-white/50"
-            }`}
-          />
-          <button
-            type="button"
-            onClick={() => setCurrent(2)}
-            aria-label="Go to slide 3"
-            className={`h-2 rounded-full transition-all ${
-              current === 2 ? "w-8 bg-white" : "w-2 bg-white/50"
-            }`}
-          />
-          <button
-            type="button"
-            onClick={() => setCurrent(3)}
-            aria-label="Go to slide 4"
-            className={`h-2 rounded-full transition-all ${
-              current === 3 ? "w-8 bg-white" : "w-2 bg-white/50"
-            }`}
-          />
-          <button
-            type="button"
-            onClick={() => setCurrent(4)}
-            aria-label="Go to slide 5"
-            className={`h-2 rounded-full transition-all ${
-              current === 4 ? "w-8 bg-white" : "w-2 bg-white/50"
-            }`}
-          />
-        </div>
+        ))}
       </div>
     </section>
   );
@@ -292,28 +250,64 @@ function HeroCarousel() {
 
 function WelcomeSection() {
   return (
-    <Section>
-      <div className="text-center">
-          <div className="inline-block rounded-full bg-brand-red-soft px-12 py-4 md:px-20">
-            <h1 className="font-display text-4xl font-normal text-brand-accent md:text-6xl">
-              Welcome Cosplayer !
-            </h1>
+    <section className="w-full py-12 md:py-16">
+      <Container>
+        <div className="relative">
+          <Image
+            src="/icons/custom/maple-left.png"
+            alt=""
+            width={132}
+            height={121}
+            className="absolute left-0 top-[273px] h-32 w-32"
+            aria-hidden="true"
+          />
+          <Image
+            src="/icons/custom/maple-right.png"
+            alt=""
+            width={135}
+            height={124}
+            className="absolute -right-12 top-[60px] h-32 w-32"
+            aria-hidden="true"
+          />
+
+          <div className="flex flex-col items-center">
+            <div className="flex h-20 w-[771px] items-center justify-center rounded-[43px] bg-brand-red-soft">
+              <h1 className="font-display text-6xl font-normal leading-[68px] text-brand-accent">
+                Welcome Cosplayer !
+              </h1>
+            </div>
+
+            <p className="font-baloo mt-12 w-[930px] text-center text-3xl font-bold leading-9 text-brand-red-soft">
+              Ini adalah tempat yang cocok buat kamu yang mau nyewa kostum
+              cosplay keren, aman, bersih, termurah dan terlengkap. Kami
+              hadir supaya pengalaman cosplay-mu jadi lebih mudah, cepat,
+              dan menyenangkan. Kepoin halaman web kita buat info menarik
+              lainnya terkait dunia wibu dan animanga!
+            </p>
+
+            <a
+              href="#popular"
+              aria-label="Scroll to popular section"
+              className="mt-12 inline-block transition hover:translate-y-1"
+            >
+              <Image
+                src="/icons/custom/scroll-down.png"
+                alt=""
+                width={250}
+                height={57}
+                className="h-[57px] w-[250px]"
+              />
+            </a>
           </div>
-          <p className="mx-auto mt-8 max-w-3xl text-base font-bold leading-relaxed md:text-xl">
-            Ini adalah tempat yang cocok buat kamu yang mau nyewa kostum
-            cosplay keren, aman, bersih, termurah dan terlengkap. Kami hadir
-            supaya pengalaman cosplay-mu jadi lebih mudah, cepat, dan
-            menyenangkan. Kepoin halaman web kita buat info menarik lainnya
-            terkait dunia wibu dan animanga!
-          </p>
-      </div>
-    </Section>
+        </div>
+      </Container>
+    </section>
   );
 }
 
 function PopularSection() {
   return (
-    <Section size="small">
+    <Section size="small" id="popular">
       <div className="mb-4 flex flex-col gap-1">
           <h2 className="text-2xl font-bold">Popular Now</h2>
           <a
