@@ -9,7 +9,7 @@ export default function SplashPage() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.replace("/customer/landing-page");
+      router.replace("/login");
     }, 2500);
 
     return () => clearTimeout(timer);
