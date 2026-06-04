@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function SplashPage() {
   const router = useRouter();
@@ -15,12 +16,17 @@ export default function SplashPage() {
   }, [router]);
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-brand-base-soft">
-      <div className="text-center">
-        <h1 className="font-display text-5xl font-normal text-brand-red md:text-7xl">
-          RentCos
-        </h1>
-        <p className="mt-4 text-zinc-500">Memuat...</p>
+    <main className="flex min-h-screen w-full items-center justify-center bg-brand-red">
+      <div className="flex flex-col items-center justify-center">
+        <div className="relative h-[192px] w-[192px]">
+          <Image
+            src="/logo/ryrentcos.png"
+            alt="RyRentCos"
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
       </div>
     </main>
   );

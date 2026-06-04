@@ -1,23 +1,26 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 function SidebarLink({
   children,
-  onClick,
+  href,
+  onClose,
 }: {
   children: React.ReactNode;
-  onClick: () => void;
+  href: string;
+  onClose: () => void;
 }) {
   return (
-    <button
-      type="button"
-      onClick={onClick}
+    <Link
+      href={href}
+      onClick={onClose}
       className="flex h-[50px] w-[200px] items-center justify-center rounded-[25px] text-xl font-bold text-white transition-colors hover:bg-brand-accent hover:text-brand-red"
     >
       {children}
-    </button>
+    </Link>
   );
 }
 
@@ -71,13 +74,13 @@ function Sidebar({
         <nav className="flex h-[calc(100vh-80px)] flex-col items-center bg-brand-red-soft px-[19px] pt-[37px]">
           <div className="flex w-full flex-col items-center gap-5">
             <div className="h-px w-full bg-white" />
-            <SidebarLink onClick={onClose}>Home</SidebarLink>
+            <SidebarLink href="/customer/landing-page" onClose={onClose}>Home</SidebarLink>
             <div className="h-px w-full bg-white" />
-            <SidebarLink onClick={onClose}>Cosplay Product</SidebarLink>
+            <SidebarLink href="/customer/product/product-catalog" onClose={onClose}>Cosplay Product</SidebarLink>
             <div className="h-px w-full bg-white" />
-            <SidebarLink onClick={onClose}>Cosplay Guide</SidebarLink>
+            <SidebarLink href="#" onClose={onClose}>Cosplay Guide</SidebarLink>
             <div className="h-px w-full bg-white" />
-            <SidebarLink onClick={onClose}>News</SidebarLink>
+            <SidebarLink href="/customer/article/article-archive" onClose={onClose}>Artikel</SidebarLink>
             <div className="h-px w-full bg-white" />
           </div>
         </nav>

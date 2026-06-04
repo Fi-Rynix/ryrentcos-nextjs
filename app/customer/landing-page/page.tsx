@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import { Container, Divider, Section } from "@/app/customer/_components/layout";
 
 function formatIDR(value: number) {
   // format manual biar konsisten di server & client (hindari hydration mismatch)
@@ -9,41 +10,6 @@ function formatIDR(value: number) {
 }
 
 
-
-// component
-function Container({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="mx-auto w-full max-w-[1120px] px-4 lg:px-0">{children}</div>
-  );
-}
-
-function Divider() {
-  return (
-    <div className="w-full">
-      <Container>
-        <div className="h-px bg-brand-red/30" />
-      </Container>
-    </div>
-  );
-}
-
-function Section({
-  children,
-  size = "default",
-  id,
-}: {
-  children: React.ReactNode;
-  size?: "small" | "default";
-  id?: string;
-}) {
-  const padding = size === "small" ? "py-8" : "py-12 md:py-16";
-
-  return (
-    <section id={id} className={`w-full scroll-mt-[88px] ${padding}`}>
-      <Container>{children}</Container>
-    </section>
-  );
-}
 
 function Badge({
   variant,
@@ -350,24 +316,51 @@ function WelcomeSection() {
           />
 
           <div className="flex flex-col items-center">
-            <div className="flex h-14 w-full max-w-[771px] items-center justify-center rounded-[43px] bg-brand-red-soft px-6 sm:h-16 md:h-20">
-              <h1 className="font-display text-3xl font-normal leading-tight text-brand-accent sm:text-4xl md:text-6xl md:leading-[68px]">
-                Welcome Cosplayer !
-              </h1>
+            <div className="flex flex-col items-center gap-3">
+              <span className="inline-flex items-center gap-1.5 rounded-full border-2 border-brand-accent bg-brand-accent px-3 py-1 text-xs font-bold uppercase tracking-widest text-white shadow-[2px_2px_0_0_rgba(0,0,0,0.15)]">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" className="text-yellow-200">
+                  <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" />
+                </svg>
+                Hello, Cosplayer!
+              </span>
+
+              <div className="flex items-center gap-3">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-brand-accent opacity-60" aria-hidden="true">
+                  <path d="M12 2l2 6.5h6.5l-5 3.9 2 6.6-5.5-4-5.5 4 2-6.6-5-3.9h6.5z" fill="currentColor" />
+                </svg>
+                <div className="flex h-14 w-full max-w-[771px] items-center justify-center rounded-[43px] bg-brand-red-soft px-6 sm:h-16 md:h-20">
+                  <h1 className="font-display text-3xl font-normal leading-tight text-brand-accent sm:text-4xl md:text-6xl md:leading-[68px]">
+                    Welcome Cosplayer !
+                  </h1>
+                </div>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-brand-accent opacity-60" aria-hidden="true">
+                  <path d="M12 2l2 6.5h6.5l-5 3.9 2 6.6-5.5-4-5.5 4 2-6.6-5-3.9h6.5z" fill="currentColor" />
+                </svg>
+              </div>
             </div>
 
-            <p className="font-baloo mt-6 w-full max-w-[930px] text-center text-base font-bold leading-snug text-brand-red-soft sm:text-lg sm:leading-7 md:mt-12 md:text-3xl md:leading-9">
+            <p className="relative mt-6 w-full max-w-[930px] text-center text-base font-bold leading-snug text-brand-red-soft sm:text-lg sm:leading-7 md:mt-12 md:text-3xl md:leading-9">
+              <span className="absolute -left-6 top-1/2 -translate-y-1/2 text-brand-accent opacity-50" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2l2 6.5h6.5l-5 3.9 2 6.6-5.5-4-5.5 4 2-6.6-5-3.9h6.5z" />
+                </svg>
+              </span>
               Ini adalah tempat yang cocok buat kamu yang mau nyewa kostum
               cosplay keren, aman, bersih, termurah dan terlengkap. Kami
               hadir supaya pengalaman cosplay-mu jadi lebih mudah, cepat,
               dan menyenangkan. Kepoin halaman web kita buat info menarik
               lainnya terkait dunia wibu dan animanga!
+              <span className="absolute -right-6 top-1/2 -translate-y-1/2 text-brand-accent opacity-50" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 2l2 6.5h6.5l-5 3.9 2 6.6-5.5-4-5.5 4 2-6.6-5-3.9h6.5z" />
+                </svg>
+              </span>
             </p>
 
             <a
               href="#popular"
               aria-label="Scroll to popular section"
-              className="mt-6 inline-block transition hover:translate-y-1 md:mt-12"
+              className="mt-6 inline-block transition hover:-translate-y-1 md:mt-12"
             >
               <Image
                 src="/icons/custom/scroll-down.png"
@@ -388,14 +381,31 @@ function PopularSection() {
   return (
     <Section size="small" id="popular">
       <div className="flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold leading-8">Popular Now</h2>
-          <a
-            href="#"
-            className="text-base font-bold leading-5 text-brand-red-soft hover:underline"
-          >
-            See All &gt;&gt;&gt;
-          </a>
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2">
+            <span className="rounded-full bg-brand-red-soft px-2.5 py-0.5 text-xs font-bold uppercase tracking-widest text-white">
+              Trending
+            </span>
+            <span className="text-xs text-zinc-500">Updated hari ini</span>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-brand-accent" aria-hidden="true">
+                <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" />
+              </svg>
+              <h2 className="text-2xl font-bold leading-8">Popular Now</h2>
+            </div>
+            <a
+              href="#"
+              className="flex items-center gap-1 text-base font-bold leading-5 text-brand-red-soft hover:underline"
+            >
+              See All
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14M13 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
         </div>
 
         <div className="relative overflow-hidden rounded-[20px] bg-white p-3 shadow-[0px_0px_16px_2px_rgba(0,0,0,0.12)] lg:h-[367px] lg:p-0">
@@ -460,20 +470,38 @@ function MostRentSection() {
   return (
     <Section size="small">
       <div className="flex flex-col gap-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold leading-8">Most Rent All of Time</h2>
-          <a
-            href="#"
-            className="text-base font-bold leading-5 text-brand-red-soft hover:underline"
-          >
-            See All &gt;&gt;&gt;
-          </a>
+        <div className="flex flex-col gap-2">
+          <div className="flex items-center gap-2">
+            <span className="rounded-full bg-brand-accent px-2.5 py-0.5 text-xs font-bold uppercase tracking-widest text-brand-red">
+              Hall of Fame
+            </span>
+            <span className="text-xs text-zinc-500">All time favorite</span>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-brand-accent" aria-hidden="true">
+                <path d="M8 21h8M12 17v4M7 4h10l-1.5 9a2 2 0 01-2 1.8H10.5a2 2 0 01-2-1.8L7 4z" />
+                <path d="M5 9a2 2 0 012-2h10a2 2 0 012 2" />
+              </svg>
+              <h2 className="text-2xl font-bold leading-8">Most Rent All of Time</h2>
+            </div>
+            <a
+              href="#"
+              className="flex items-center gap-1 text-base font-bold leading-5 text-brand-red-soft hover:underline"
+            >
+              See All
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5 12h14M13 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
         </div>
 
         <div className="relative overflow-hidden rounded-[20px] bg-white p-3 shadow-[0px_0px_16px_2px_rgba(0,0,0,0.12)] lg:h-[367px] lg:p-0">
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:absolute lg:left-[15px] lg:top-[16px] lg:flex lg:items-center lg:gap-2.5">
             <ProductCard
-              title="(Fullset) Cosplay Hu Tao - Genshin Impact"
+              title="(Fullset) Cosplay Kaoruko Waguri - The Fragrant Flower Blooms with Dignity"
               price={150000}
               duration="For 3 Days"
               image="/images/fullset/waguri.png"
@@ -482,7 +510,7 @@ function MostRentSection() {
             </ProductCard>
 
             <ProductCard
-              title="(Fullset) Cosplay Raiden Shogun - Genshin Impact"
+              title="(Fullset) Cosplay Hoshou Marine - Hololive"
               price={150000}
               duration="For 3 Days"
               image="/images/fullset/marine.png"
@@ -491,7 +519,7 @@ function MostRentSection() {
             </ProductCard>
 
             <ProductCard
-              title="(Wig) Cosplay Kafka - Honkai: Star Rail"
+              title="(Wig) Cosplay Kaedehara Kazuha - Genshin Impact"
               price={75000}
               duration="For 3 Days"
               image="/images/wig/kazuha.png"
@@ -500,7 +528,7 @@ function MostRentSection() {
             </ProductCard>
 
             <ProductCard
-              title="(Aksesoris) Cosplay Acheron - Honkai: Star Rail"
+              title="(Aksesoris) Prop Arlecchino - Genshin Impact"
               price={60000}
               duration="For 3 Days"
               image="/images/prop/arlecchino.png"
@@ -509,7 +537,7 @@ function MostRentSection() {
             </ProductCard>
 
             <ProductCard
-              title="(Aksesoris) Cosplay Sparkle - Honkai: Star Rail"
+              title="(Aksesoris) Prop Phainon - Honkai: Star Rail"
               price={60000}
               duration="For 3 Days"
               image="/images/prop/phainon.png"
@@ -527,28 +555,50 @@ function MostRentSection() {
 function NewsSection() {
   return (
     <Section size="small">
-      <div className="mb-4 flex flex-col gap-1">
-        <h2 className="text-2xl font-bold">Trending News</h2>
-        <a
-          href="#"
-          className="text-sm font-bold text-brand-red-soft hover:underline"
-        >
-          See All &gt;&gt;&gt;
-        </a>
+      <div className="mb-4 flex flex-col gap-2">
+        <div className="flex items-center gap-2">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" className="text-brand-red-soft" aria-hidden="true">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" />
+          </svg>
+          <span className="text-xs text-zinc-500">Juni 2026</span>
+        </div>
+
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <h2 className="text-2xl font-bold">Trending News</h2>
+          </div>
+          <a
+            href="#"
+            className="flex items-center gap-1 text-sm font-bold text-brand-red-soft hover:underline"
+          >
+            See All
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M13 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
       </div>
 
-      <article className="relative mb-8 h-48 overflow-hidden rounded-2xl bg-zinc-300 shadow-md md:h-[465px]">
-        <Image
-          src="/images/article/makeine.png"
-          alt="Anime Makeine: Too Many Losing Heroines!"
-          fill
-          sizes="(min-width: 768px) 1120px, 100vw"
-          priority
-          className="scale-110 object-cover"
-        />
-        <div className="absolute inset-x-0 bottom-0 flex h-16 items-center bg-black/40 px-4 md:h-40 md:px-6">
-          <span className="absolute left-0 top-0 h-full w-2 bg-brand-accent md:w-4" />
-          <h3 className="line-clamp-2 pl-2 text-base font-bold leading-tight text-white md:text-3xl md:leading-tight">
+      <article className="relative mb-8 overflow-hidden rounded-2xl shadow-md">
+        <div className="relative h-48 md:h-[465px]">
+          <Image
+            src="/images/article/makeine.png"
+            alt="Anime Makeine: Too Many Losing Heroines!"
+            fill
+            sizes="(min-width: 768px) 1120px, 100vw"
+            priority
+            className="object-cover"
+          />
+        </div>
+
+        <div className="absolute inset-x-0 bottom-0 flex h-16 flex-col justify-end bg-gradient-to-t from-black/80 via-black/50 to-transparent px-4 pb-3 pt-10 md:h-40 md:px-6">
+          <div className="flex items-center gap-2">
+            <span className="rounded-full bg-brand-red-soft px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-white">
+              Editor&apos;s Pick
+            </span>
+            <span className="text-xs text-white/70">Juni 2026</span>
+          </div>
+          <h3 className="line-clamp-2 mt-1 text-base font-bold leading-tight text-white md:mt-2 md:text-3xl md:leading-tight">
             Anime Makeine: Too Many Losing Heroines! Umumkan Musim Kedua, Ini Detail Lengkapnya
           </h3>
         </div>
