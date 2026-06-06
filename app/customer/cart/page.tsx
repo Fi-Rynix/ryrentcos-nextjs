@@ -247,7 +247,7 @@ export default function CartPage() {
               {/* Buttons */}
               <div className="flex flex-col items-center gap-3">
                 <Link
-                  href="/customer/payment"
+                  href="/customer/payment/payment-detail"
                   className="flex h-10 w-44 items-center justify-center rounded-[20px] bg-brand-red text-sm font-extrabold text-white transition-colors hover:bg-brand-red-soft"
                 >
                   Checkout

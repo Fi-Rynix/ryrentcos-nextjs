@@ -228,7 +228,7 @@ export default function ProductDetailPage() {
               </span>
             </Link>
             <Link
-              href="/customer/payment"
+              href="/customer/payment/payment-detail"
               className="flex h-14 flex-1 items-center justify-center rounded-[20px] bg-brand-red"
             >
               <span className="text-lg font-extrabold text-white">

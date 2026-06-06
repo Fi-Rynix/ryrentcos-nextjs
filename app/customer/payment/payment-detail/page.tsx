@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -97,8 +98,10 @@ export default function CheckoutPage() {
     null
   );
 
+  const router = useRouter();
+
   const handleBayar = () => {
-    // Redirect to success page
+    router.push("/customer/payment-success");
   };
 
   return (
@@ -358,7 +361,7 @@ export default function CheckoutPage() {
             {/* Tombol Bayar */}
             <div className="flex justify-center pt-4">
               <Link
-                href="/customer/succes-payment"
+                href="/customer/payment/payment-success"
                 className={`flex h-12 w-56 items-center justify-center rounded-[20px] bg-brand-red text-base font-bold text-white transition-colors hover:bg-brand-red-soft ${
                   !selectedPayment ? "pointer-events-none opacity-50" : ""
                 }`}
