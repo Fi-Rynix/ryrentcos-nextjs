@@ -275,7 +275,7 @@ function PriceDisplay({
 function PopularProductCard({ item }: { item: ProductItem }) {
   return (
     <Link
-      href="#"
+      href="/customer/product/product-detail"
       className="group flex h-[320px] w-[176px] shrink-0 flex-col overflow-hidden rounded-[10px] bg-white"
     >
       {/* Image */}
@@ -334,7 +334,7 @@ function PopularProductCard({ item }: { item: ProductItem }) {
 function CatalogProductCard({ item }: { item: ProductItem }) {
   return (
     <Link
-      href="#"
+      href="/customer/product/product-detail"
       className="group flex h-[384px] w-[256px] shrink-0 flex-col overflow-hidden rounded-[10px] bg-white shadow-[0px_4px_8px_0px_rgba(0,0,0,0.12)]"
     >
       <div className="relative h-[224px] w-full overflow-hidden rounded-[10px] bg-brand-base-soft">

@@ -273,13 +273,14 @@ function Header({
           </div>
 
           <div className="flex items-center justify-end gap-[50px]">
-            <button
+            <Link
+              href="/customer/cart"
               type="button"
               aria-label="Cart"
               className="rounded p-2 hover:bg-white/10"
             >
               <Image src="/icons/cart.png" alt="" width={28} height={28} />
-            </button>
+            </Link>
             <button
               type="button"
               aria-label="Profile"
