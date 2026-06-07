@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -97,12 +96,6 @@ export default function CheckoutPage() {
   const [selectedPayment, setSelectedPayment] = useState<PaymentMethod | null>(
     null
   );
-
-  const router = useRouter();
-
-  const handleBayar = () => {
-    router.push("/customer/payment-success");
-  };
 
   return (
     <div className="min-h-screen w-full bg-red-50 pb-20">

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Container, TitleDivider } from "@/app/customer/_components/layout";
+import { TitleDivider } from "@/app/customer/_components/layout";
 import { Badge, SectionTitle } from "@/app/customer/_components/ui";
 
 /* ============================================================

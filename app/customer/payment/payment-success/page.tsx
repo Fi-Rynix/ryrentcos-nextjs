@@ -88,7 +88,7 @@ export default function SuccessPaymentPage() {
             </p>
             <p className="mt-2 text-base text-black">
               Barang kamu akan segera dikirim, kamu bisa cek rincian pengiriman di
-              halaman "Pesanan Saya" atau klik tombol di bawah
+              halaman &ldquo;Pesanan Saya&rdquo; atau klik tombol di bawah
             </p>
             <p className="mt-4 text-base font-bold text-black">
               Terimakasih telah order kebutuhan Cosplay di RyRentCos!

@@ -25,20 +25,22 @@ function SidebarLink({
 }
 
 function ProfileLink({
+  href,
   children,
   onClick,
 }: {
+  href: string;
   children: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
 }) {
   return (
-    <button
-      type="button"
+    <Link
+      href={href}
       onClick={onClick}
       className="flex h-[35px] w-[195px] items-center justify-center rounded-[25px] text-xl font-bold text-brand-red transition-colors hover:bg-brand-red hover:text-white"
     >
       {children}
-    </button>
+    </Link>
   );
 }
 
@@ -124,13 +126,13 @@ function ProfileDropdown({
     >
       <nav className="flex h-full flex-col items-center justify-center gap-2.5 px-4">
         <div className="h-px w-full bg-brand-red" />
-        <ProfileLink onClick={onClose}>My Profile</ProfileLink>
+        <ProfileLink href="/customer/profile" onClick={onClose}>My Profile</ProfileLink>
         <div className="h-px w-full bg-brand-red" />
-        <ProfileLink onClick={onClose}>My Order</ProfileLink>
+        <ProfileLink href="/customer/transaction/transaction-history" onClick={onClose}>My Order</ProfileLink>
         <div className="h-px w-full bg-brand-red" />
-        <ProfileLink onClick={onClose}>FAQ</ProfileLink>
+        <ProfileLink href="/customer/faq" onClick={onClose}>FAQ</ProfileLink>
         <div className="h-px w-full bg-brand-red" />
-        <ProfileLink onClick={onClose}>Logout</ProfileLink>
+        <ProfileLink href="/login" onClick={onClose}>Logout</ProfileLink>
         <div className="h-px w-full bg-brand-red" />
       </nav>
     </div>

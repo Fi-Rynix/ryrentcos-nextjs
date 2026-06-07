@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { TitleDivider } from "@/app/customer/_components/layout";
+
 
 /* ============================================================
    TYPES
@@ -262,7 +262,7 @@ export default function TransactionHistoryPage() {
     <div className="min-h-screen w-full bg-brand-base-soft pb-20">
       <div className="mx-auto w-full max-w-[1120px] px-4 pt-10">
         {/* Header */}
-        <div className="mb-8 flex w-full max-w-[700px] flex-col items-center text-center">
+        <div className="mx-auto mb-8 flex w-full max-w-[700px] flex-col items-center text-center">
           <h1 className="font-display text-5xl font-normal leading-[58px] text-brand-red">
             My Order
           </h1>
@@ -270,7 +270,7 @@ export default function TransactionHistoryPage() {
         </div>
 
         {/* Tab Switcher */}
-        <div className="mb-8">
+        <div className="mb-8 flex w-full justify-center">
           <TabSwitcher activeTab={activeTab} onTabChange={setActiveTab} />
         </div>
 
