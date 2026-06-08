@@ -67,9 +67,9 @@ const ORDER_DATA: OrderData = {
   paymentMethod: "bank",
   orderFee: 105000,
   discount: 0,
-  shippingCost: 22000,
+  shippingCost: 20000,
   serviceFee: 2000,
-  total: 129000,
+  total: 127000,
   status: "dikirim",
 };
 
@@ -390,8 +390,11 @@ export default function TransactionDetailPage() {
               ================================================ */}
           <div className="rounded-[10px] bg-white p-4 shadow-[2px_2px_8px_0px_rgba(0,0,0,0.25)]">
             {/* Header - Red Background */}
-            <div className="-m-4 mb-4 bg-brand-red p-4">
+            <div className="-m-4 mb-4 flex items-center justify-between bg-brand-red p-4">
               <h2 className="text-xl font-bold text-white">Progres Pesanan</h2>
+              <span className="rounded-full bg-brand-accent px-3 py-1 text-xs font-bold text-black">
+                {getStatusLabel(ORDER_DATA.status)}
+              </span>
             </div>
 
             {/* Order Progress Step */}
@@ -400,31 +403,25 @@ export default function TransactionDetailPage() {
             </div>
 
             {/* Metadata */}
-            <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-              <div className="flex flex-col gap-1">
+            <div className="mt-8 grid grid-cols-2 gap-4 text-center sm:grid-cols-4">
+              <div className="flex flex-col items-center gap-1">
                 <span className="text-xs text-black/60">ID Pesanan</span>
                 <span className="text-sm font-bold text-black">{ORDER_DATA.orderId}</span>
               </div>
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col items-center gap-1">
                 <span className="text-xs text-black/60">No. Resi</span>
                 <span className="text-sm font-bold text-black">{ORDER_DATA.trackingNumber}</span>
               </div>
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col items-center gap-1">
                 <span className="text-xs text-black/60">Tanggal Rental</span>
                 <span className="text-sm font-bold text-black">{ORDER_DATA.rentDate}</span>
               </div>
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col items-center gap-1">
                 <span className="text-xs text-black/60">Tanggal Kembali</span>
                 <span className="text-sm font-bold text-black">{ORDER_DATA.returnDate}</span>
               </div>
             </div>
 
-            {/* Status Badge */}
-            <div className="mt-4 flex items-center gap-2">
-              <span className="rounded-full bg-brand-red px-3 py-1 text-xs font-bold text-white">
-                {getStatusLabel(ORDER_DATA.status)}
-              </span>
-            </div>
           </div>
 
           {/* ================================================

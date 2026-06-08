@@ -80,7 +80,7 @@ function Sidebar({
             <div className="h-px w-full bg-white" />
             <SidebarLink href="/customer/product/product-catalog" onClose={onClose}>Cosplay Product</SidebarLink>
             <div className="h-px w-full bg-white" />
-            <SidebarLink href="#" onClose={onClose}>Cosplay Guide</SidebarLink>
+            <SidebarLink href="/customer/video/video-archive" onClose={onClose}>Cosplay Guide</SidebarLink>
             <div className="h-px w-full bg-white" />
             <SidebarLink href="/customer/article/article-archive" onClose={onClose}>Artikel</SidebarLink>
             <div className="h-px w-full bg-white" />
