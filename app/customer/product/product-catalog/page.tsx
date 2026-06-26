@@ -173,7 +173,7 @@ function formatPrice(price: number): string {
 function PageTitle() {
   return (
     <div className="flex w-full max-w-[548px] flex-col items-center text-center">
-      <h1 className="font-display text-5xl font-normal leading-[58px] text-brand-red">
+      <h1 className="font-display text-4xl font-normal leading-tight text-brand-red sm:text-5xl sm:leading-[58px]">
         Product Catalog
       </h1>
       <TitleDivider />
@@ -330,30 +330,32 @@ function PopularProductCard({ item }: { item: ProductItem }) {
 
 /**
  * Catalog product card — larger (256×384).
+ * - Mobile: fluid width (grid item), smaller height
+ * - Desktop: fixed 256×384
  */
 function CatalogProductCard({ item }: { item: ProductItem }) {
   return (
     <Link
       href="/customer/product/product-detail"
-      className="group flex h-[384px] w-[256px] shrink-0 flex-col overflow-hidden rounded-[10px] bg-white shadow-[0px_4px_8px_0px_rgba(0,0,0,0.12)]"
+      className="group flex h-[300px] w-full flex-col overflow-hidden rounded-[10px] bg-white shadow-[0px_4px_8px_0px_rgba(0,0,0,0.12)] md:h-[384px] md:w-[256px] md:shrink-0"
     >
-      <div className="relative h-[224px] w-full overflow-hidden rounded-[10px] bg-brand-base-soft">
+      <div className="relative h-[160px] w-full overflow-hidden rounded-[10px] bg-brand-base-soft md:h-[224px]">
         <Image
           src={item.image}
           alt={item.title}
           fill
-          sizes="256px"
+          sizes="(max-width: 768px) 50vw, 256px"
           className="object-cover object-left-top"
         />
       </div>
 
-      <div className="mt-5 flex w-full flex-col gap-[5px] px-3">
+      <div className="mt-3 flex w-full flex-col gap-[5px] px-2 md:mt-5 md:px-3">
         <div className="flex flex-wrap items-center gap-1">
-          {item.labels.map((label) => (
+          {item.labels.slice(0, 2).map((label) => (
             <ProductLabelBadge key={label} label={label} />
           ))}
         </div>
-        <h3 className="line-clamp-2 text-sm font-bold leading-5 text-black">
+        <h3 className="line-clamp-2 text-xs font-bold leading-4 text-black md:text-sm md:leading-5">
           {item.title}
         </h3>
         <PriceDisplay
@@ -367,14 +369,68 @@ function CatalogProductCard({ item }: { item: ProductItem }) {
 }
 
 /**
- * Popular Now section — horizontal scroll dengan 5 cards.
+ * Popular Now section
+ * - Mobile (<md): carousel 1 card + prev/next arrow buttons
+ * - Desktop (>=md): horizontal row all 5 cards centered
  */
 function PopularSection() {
+  const [step, setStep] = useState(0);
+  const total = POPULAR_PRODUCTS.length;
+  const prev = () => setStep((s) => (s - 1 + total) % total);
+  const next = () => setStep((s) => (s + 1) % total);
+
   return (
     <div className="flex w-full flex-col gap-4">
       <h3 className="text-2xl font-bold leading-8 text-black">Popular Now</h3>
 
-      <div className="relative overflow-hidden rounded-[20px] bg-white p-[15px] pb-0 shadow-[0px_0px_16px_2px_rgba(0,0,0,0.12)]">
+      {/* Mobile carousel — 1 card centered with arrow buttons */}
+      <div className="mx-auto w-full max-w-[280px] relative overflow-hidden rounded-[20px] bg-white p-4 shadow-[0px_0px_16px_2px_rgba(0,0,0,0.12)] md:hidden">
+        <div className="flex items-center justify-center">
+          <PopularProductCard item={POPULAR_PRODUCTS[step]} />
+        </div>
+
+        {/* Prev button */}
+        <button
+          type="button"
+          onClick={prev}
+          aria-label="Previous product"
+          className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full border-[3px] border-brand-red-soft bg-white p-1.5 text-brand-red shadow-lg transition hover:scale-105"
+        >
+          <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden="true">
+            <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+
+        {/* Next button */}
+        <button
+          type="button"
+          onClick={next}
+          aria-label="Next product"
+          className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full border-[3px] border-brand-red-soft bg-white p-1.5 text-brand-red shadow-lg transition hover:scale-105"
+        >
+          <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden="true">
+            <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+
+        {/* Dots indicator */}
+        <div className="mt-3 flex justify-center gap-1.5">
+          {POPULAR_PRODUCTS.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setStep(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              className={`h-2 rounded-full transition-all ${
+                step === i ? "w-6 bg-brand-red-soft" : "w-2 bg-brand-red-soft/40"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop — horizontal row all cards */}
+      <div className="relative hidden overflow-hidden rounded-[20px] bg-white p-[15px] pb-0 shadow-[0px_0px_16px_2px_rgba(0,0,0,0.12)] md:block">
         <div className="flex items-center justify-center gap-10">
           {POPULAR_PRODUCTS.map((item) => (
             <PopularProductCard key={item.id} item={item} />
@@ -413,62 +469,54 @@ function FilterOption({
 }
 
 /**
- * Filter panel — Kategori + Ukuran.
+ * General filter — Kategori + Ukuran.
+ * Always expanded (no collapse).
  */
-function FilterPanel() {
+function GeneralFilter() {
   const [activeKategori, setActiveKategori] = useState("Semua");
   const [activeUkuran, setActiveUkuran] = useState<string | null>(null);
 
-  return (
-    <div className="flex w-56 shrink-0 flex-col gap-6">
-      {/* Kategori filter */}
-      <div className="flex flex-col gap-3 rounded-3xl bg-white p-6 shadow-[0px_0px_16px_2px_rgba(0,0,0,0.12)]">
-        <div className="flex items-center gap-2.5">
-          <svg
-            width="19"
-            height="18"
-            viewBox="0 0 19 18"
-            fill="none"
-            className="text-brand-red"
-          >
-            <path
-              d="M7.49986 15C7.49979 15.1549 7.54287 15.3067 7.62427 15.4385C7.70567 15.5702 7.82217 15.6767 7.9607 15.7459L9.62736 16.5792C9.75444 16.6427 9.89565 16.6727 10.0376 16.6662C10.1795 16.6598 10.3174 16.6172 10.4382 16.5425C10.559 16.4678 10.6588 16.3634 10.7279 16.2393C10.797 16.1152 10.8333 15.9754 10.8332 15.8334V10C10.8334 9.58703 10.9869 9.18879 11.264 8.88254L17.2832 2.22504C17.3911 2.10551 17.462 1.95728 17.4874 1.79828C17.5129 1.63928 17.4917 1.47632 17.4264 1.3291C17.3612 1.18189 17.2547 1.05673 17.1199 0.96875C16.985 0.880775 16.8275 0.833754 16.6665 0.833374H1.66653C1.50537 0.833432 1.34768 0.88022 1.21257 0.968071C1.07746 1.05592 0.97072 1.18107 0.905283 1.32834C0.839846 1.47562 0.818518 1.63871 0.843883 1.79787C0.869248 1.95702 0.940218 2.1054 1.0482 2.22504L7.06903 8.88254C7.34614 9.18879 7.49968 9.58703 7.49986 10V15Z"
-              stroke="currentColor"
-              strokeWidth="1.66667"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <span className="font-display text-base leading-5 text-brand-red">
-            Filter
-          </span>
-        </div>
+  const kategoriOptions = ["Semua", "Fullset", "Wig", "Properties"];
 
+  return (
+    <div className="flex flex-col gap-3 rounded-3xl bg-white p-4 shadow-[0px_0px_16px_2px_rgba(0,0,0,0.12)] md:p-6">
+      {/* Header */}
+      <div className="flex items-center gap-2.5">
+        <svg
+          width="19"
+          height="18"
+          viewBox="0 0 19 18"
+          fill="none"
+          className="text-brand-red"
+        >
+          <path
+            d="M7.49986 15C7.49979 15.1549 7.54287 15.3067 7.62427 15.4385C7.70567 15.5702 7.82217 15.6767 7.9607 15.7459L9.62736 16.5792C9.75444 16.6427 9.89565 16.6727 10.0376 16.6662C10.1795 16.6598 10.3174 16.6172 10.4382 16.5425C10.559 16.4678 10.6588 16.3634 10.7279 16.2393C10.797 16.1152 10.8333 15.9754 10.8332 15.8334V10C10.8334 9.58703 10.9869 9.18879 11.264 8.88254L17.2832 2.22504C17.3911 2.10551 17.462 1.95728 17.4874 1.79828C17.5129 1.63928 17.4917 1.47632 17.4264 1.3291C17.3612 1.18189 17.2547 1.05673 17.1199 0.96875C16.985 0.880775 16.8275 0.833754 16.6665 0.833374H1.66653C1.50537 0.833432 1.34768 0.88022 1.21257 0.968071C1.07746 1.05592 0.97072 1.18107 0.905283 1.32834C0.839846 1.47562 0.818518 1.63871 0.843883 1.79787C0.869248 1.95702 0.940218 2.1054 1.0482 2.22504L7.06903 8.88254C7.34614 9.18879 7.49968 9.58703 7.49986 10V15Z"
+            stroke="currentColor"
+            strokeWidth="1.66667"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        <span className="font-display text-base leading-5 text-brand-red">
+          Filter
+        </span>
+      </div>
+
+      {/* Body — always shown */}
+      <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
           <span className="text-sm font-extrabold leading-5 text-black">
             Kategori
           </span>
           <div className="flex flex-col gap-2">
-            <FilterOption
-              label="Semua"
-              isActive={activeKategori === "Semua"}
-              onClick={() => setActiveKategori("Semua")}
-            />
-            <FilterOption
-              label="Fullset"
-              isActive={activeKategori === "Fullset"}
-              onClick={() => setActiveKategori("Fullset")}
-            />
-            <FilterOption
-              label="Wig"
-              isActive={activeKategori === "Wig"}
-              onClick={() => setActiveKategori("Wig")}
-            />
-            <FilterOption
-              label="Properties"
-              isActive={activeKategori === "Properties"}
-              onClick={() => setActiveKategori("Properties")}
-            />
+            {kategoriOptions.map((opt) => (
+              <FilterOption
+                key={opt}
+                label={opt}
+                isActive={activeKategori === opt}
+                onClick={() => setActiveKategori(opt)}
+              />
+            ))}
           </div>
         </div>
 
@@ -477,64 +525,14 @@ function FilterPanel() {
             Ukuran (Fullset)
           </span>
           <div className="flex flex-col gap-2">
-            <FilterOption
-              label="M"
-              isActive={activeUkuran === "M"}
-              onClick={() => setActiveUkuran(activeUkuran === "M" ? null : "M")}
-            />
-            <FilterOption
-              label="L"
-              isActive={activeUkuran === "L"}
-              onClick={() => setActiveUkuran(activeUkuran === "L" ? null : "L")}
-            />
-            <FilterOption
-              label="XL"
-              isActive={activeUkuran === "XL"}
-              onClick={() => setActiveUkuran(activeUkuran === "XL" ? null : "XL")}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Tanggal filter */}
-      <div className="flex flex-col gap-3 rounded-3xl bg-white p-6 shadow-[0px_0px_16px_2px_rgba(0,0,0,0.12)]">
-        <div className="flex items-center gap-2.5">
-          <svg
-            width="19"
-            height="18"
-            viewBox="0 0 19 18"
-            fill="none"
-            className="text-brand-red"
-          >
-            <path
-              d="M7.49986 15C7.49979 15.1549 7.54287 15.3067 7.62427 15.4385C7.70567 15.5702 7.82217 15.6767 7.9607 15.7459L9.62736 16.5792C9.75444 16.6427 9.89565 16.6727 10.0376 16.6662C10.1795 16.6598 10.3174 16.6172 10.4382 16.5425C10.559 16.4678 10.6588 16.3634 10.7279 16.2393C10.797 16.1152 10.8333 15.9754 10.8332 15.8334V10C10.8334 9.58703 10.9869 9.18879 11.264 8.88254L17.2832 2.22504C17.3911 2.10551 17.462 1.95728 17.4874 1.79828C17.5129 1.63928 17.4917 1.47632 17.4264 1.3291C17.3612 1.18189 17.2547 1.05673 17.1199 0.96875C16.985 0.880775 16.8275 0.833754 16.6665 0.833374H1.66653C1.50537 0.833432 1.34768 0.88022 1.21257 0.968071C1.07746 1.05592 0.97072 1.18107 0.905283 1.32834C0.839846 1.47562 0.818518 1.63871 0.843883 1.79787C0.869248 1.95702 0.940218 2.1054 1.0482 2.22504L7.06903 8.88254C7.34614 9.18879 7.49968 9.58703 7.49986 10V15Z"
-              stroke="currentColor"
-              strokeWidth="1.66667"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <span className="font-display text-base leading-5 text-brand-red">
-            Filter Tanggal<br />Ketersediaan
-          </span>
-        </div>
-
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <span className="text-sm font-extrabold leading-5 text-black">
-              Tanggal Mulai Sewa:
-            </span>
-            <div className="flex h-8 items-center rounded-[5px] bg-gray-200 px-4 text-sm font-bold leading-5 text-black">
-              22/12/2025
-            </div>
-          </div>
-          <div className="flex flex-col gap-2">
-            <span className="text-sm font-extrabold leading-5 text-black">
-              Tanggal Berakhir Sewa:
-            </span>
-            <div className="flex h-8 items-center rounded-[5px] bg-gray-200 px-4 text-sm font-bold leading-5 text-black">
-              25/12/2025
-            </div>
+            {(["M", "L", "XL"] as const).map((size) => (
+              <FilterOption
+                key={size}
+                label={size}
+                isActive={activeUkuran === size}
+                onClick={() => setActiveUkuran(activeUkuran === size ? null : size)}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -543,11 +541,87 @@ function FilterPanel() {
 }
 
 /**
+ * Date filter — always expanded.
+ */
+function DateFilter() {
+  return (
+    <div className="flex flex-col gap-3 rounded-3xl bg-white p-4 shadow-[0px_0px_16px_2px_rgba(0,0,0,0.12)] md:p-6">
+      {/* Header */}
+      <div className="flex items-center gap-2.5">
+        <svg
+          width="19"
+          height="18"
+          viewBox="0 0 19 18"
+          fill="none"
+          className="text-brand-red"
+        >
+          <path
+            d="M7.49986 15C7.49979 15.1549 7.54287 15.3067 7.62427 15.4385C7.70567 15.5702 7.82217 15.6767 7.9607 15.7459L9.62736 16.5792C9.75444 16.6427 9.89565 16.6727 10.0376 16.6662C10.1795 16.6598 10.3174 16.6172 10.4382 16.5425C10.559 16.4678 10.6588 16.3634 10.7279 16.2393C10.797 16.1152 10.8333 15.9754 10.8332 15.8334V10C10.8334 9.58703 10.9869 9.18879 11.264 8.88254L17.2832 2.22504C17.3911 2.10551 17.462 1.95728 17.4874 1.79828C17.5129 1.63928 17.4917 1.47632 17.4264 1.3291C17.3612 1.18189 17.2547 1.05673 17.1199 0.96875C16.985 0.880775 16.8275 0.833754 16.6665 0.833374H1.66653C1.50537 0.833432 1.34768 0.88022 1.21257 0.968071C1.07746 1.05592 0.97072 1.18107 0.905283 1.32834C0.839846 1.47562 0.818518 1.63871 0.843883 1.79787C0.869248 1.95702 0.940218 2.1054 1.0482 2.22504L7.06903 8.88254C7.34614 9.18879 7.49968 9.58703 7.49986 10V15Z"
+            stroke="currentColor"
+            strokeWidth="1.66667"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+        <span className="font-display text-base leading-5 text-brand-red">
+          Filter Tanggal<br className="md:hidden" /> Ketersediaan
+        </span>
+      </div>
+
+      {/* Body — always shown */}
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-2">
+          <span className="text-sm font-extrabold leading-5 text-black">
+            Tanggal Mulai Sewa:
+          </span>
+          <div className="flex h-8 items-center rounded-[5px] bg-gray-200 px-4 text-sm font-bold leading-5 text-black">
+            22/12/2025
+          </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <span className="text-sm font-extrabold leading-5 text-black">
+            Tanggal Berakhir Sewa:
+          </span>
+          <div className="flex h-8 items-center rounded-[5px] bg-gray-200 px-4 text-sm font-bold leading-5 text-black">
+            25/12/2025
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Filter wrapper
+ * - Mobile (<md): GeneralFilter (left) + DateFilter (right) side-by-side
+ * - Desktop (>=md): original sidebar layout (vertical)
+ */
+function FilterPanel() {
+  return (
+    <>
+      {/* Mobile: 2-col dropdown row */}
+      <div className="grid grid-cols-2 gap-3 md:hidden">
+        <GeneralFilter />
+        <DateFilter />
+      </div>
+
+      {/* Desktop: vertical sidebar */}
+      <div className="hidden w-56 shrink-0 flex-col gap-6 md:flex">
+        <GeneralFilter />
+        <DateFilter />
+      </div>
+    </>
+  );
+}
+
+/**
  * Catalog grid — menampilkan produk dengan filter.
+ * - Mobile: 2-column grid with smaller cards
+ * - Desktop: flex-wrap of fixed-size cards
  */
 function CatalogGrid() {
   return (
-    <div className="flex w-full flex-wrap items-start justify-center gap-2.5">
+    <div className="grid grid-cols-2 gap-2.5 md:flex md:w-full md:flex-wrap md:items-start md:justify-center">
       {CATALOG_PRODUCTS.map((item) => (
         <CatalogProductCard key={item.id} item={item} />
       ))}
@@ -560,9 +634,9 @@ function CatalogGrid() {
  */
 function ComingSoon() {
   return (
-    <div className="flex w-full items-center gap-7">
+    <div className="flex w-full items-center justify-center gap-3 sm:gap-7">
       <div className="h-0 flex-1 outline outline-1 outline-black opacity-30" />
-      <span className="font-display text-2xl leading-8 text-brand-red opacity-30">
+      <span className="shrink-0 text-center font-display text-base leading-6 text-brand-red opacity-30 sm:text-2xl sm:leading-8">
         More Items Coming Soon
       </span>
       <div className="h-0 flex-1 outline outline-1 outline-black opacity-30" />

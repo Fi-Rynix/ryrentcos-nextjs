@@ -263,10 +263,10 @@ export default function TransactionHistoryPage() {
       <div className="mx-auto w-full max-w-[1120px] px-4 pt-10">
         {/* Header */}
         <div className="mx-auto mb-8 flex w-full max-w-[700px] flex-col items-center text-center">
-          <h1 className="font-display text-5xl font-normal leading-[58px] text-brand-red">
+          <h1 className="font-display text-4xl font-normal leading-tight text-brand-red sm:text-5xl sm:leading-[58px]">
             My Order
           </h1>
-          <div className="mt-7 h-px w-[548px] bg-brand-red" />
+          <div className="mt-7 h-px w-full max-w-[548px] bg-brand-red" />
         </div>
 
         {/* Tab Switcher */}

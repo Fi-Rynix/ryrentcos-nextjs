@@ -89,9 +89,9 @@ export default function ProductDetailPage() {
       </div>
 
       {/* Main Content */}
-      <div className="mx-auto flex max-w-[1120px] gap-8 px-4 pt-8">
+      <div className="mx-auto flex max-w-[1120px] flex-col gap-8 px-4 pt-8 lg:flex-row lg:gap-8">
         {/* Left Side - Images (Sticky) */}
-        <div className="w-[500px] lg:sticky lg:top-20 lg:self-start">
+        <div className="w-full lg:sticky lg:top-20 lg:w-[500px] lg:self-start">
           {/* Main Image */}
           <div className="relative mb-3 overflow-hidden rounded-xl bg-white shadow-md">
             <div className="aspect-square">
@@ -99,6 +99,7 @@ export default function ProductDetailPage() {
                 src={product.images[selectedImage]}
                 alt={product.name}
                 fill
+                sizes="(max-width: 1024px) 100vw, 500px"
                 className="object-cover"
                 priority
               />
@@ -106,38 +107,40 @@ export default function ProductDetailPage() {
 
             {/* Navigation Arrows */}
             <button
-              className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border-[5px] border-brand-red bg-white/90 shadow-md transition-all hover:scale-110 hover:shadow-lg active:scale-95"
+              className="absolute left-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border-[3px] border-brand-red bg-white/90 shadow-md transition-all hover:scale-110 active:scale-95 lg:h-10 lg:w-10 lg:border-[5px]"
               onClick={() =>
                 setSelectedImage((prev) =>
                   prev > 0 ? prev - 1 : product.images.length - 1
                 )
               }
+              aria-label="Previous image"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8f220d" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8f220d" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="15 18 9 12 15 6" />
               </svg>
             </button>
             <button
-              className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border-[5px] border-brand-red bg-white/90 shadow-md transition-all hover:scale-110 hover:shadow-lg active:scale-95"
+              className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border-[3px] border-brand-red bg-white/90 shadow-md transition-all hover:scale-110 active:scale-95 lg:h-10 lg:w-10 lg:border-[5px]"
               onClick={() =>
                 setSelectedImage((prev) =>
                   prev < product.images.length - 1 ? prev + 1 : 0
                 )
               }
+              aria-label="Next image"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8f220d" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8f220d" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                 <polyline points="9 18 15 12 9 6" />
               </svg>
             </button>
           </div>
 
           {/* Thumbnail Images */}
-          <div className="flex justify-center gap-[5px]">
+          <div className="flex justify-center gap-1.5 lg:gap-[5px]">
             {product.images.map((img, index) => (
               <button
                 key={index}
                 onClick={() => setSelectedImage(index)}
-                className={`relative h-[100px] w-[100px] overflow-hidden rounded-md ${
+                className={`relative h-16 w-16 shrink-0 overflow-hidden rounded-md lg:h-[100px] lg:w-[100px] ${
                   selectedImage === index
                     ? "ring-2 ring-brand-red"
                     : "bg-white/50"
@@ -147,6 +150,7 @@ export default function ProductDetailPage() {
                   src={img}
                   alt={`Thumbnail ${index + 1}`}
                   fill
+                  sizes="(max-width: 1024px) 64px, 100px"
                   className="object-cover"
                 />
               </button>
@@ -157,32 +161,32 @@ export default function ProductDetailPage() {
         {/* Right Side - Details */}
         <div className="flex flex-1 flex-col gap-5">
           {/* Product Name */}
-          <h1 className="text-2xl font-extrabold text-black">
+          <h1 className="text-xl font-extrabold text-black sm:text-2xl">
             {product.name}
           </h1>
 
           {/* Price */}
-          <div className="flex items-center gap-3">
-            <span className="text-xl font-extrabold text-brand-red line-through">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+            <span className="text-base font-extrabold text-brand-red line-through sm:text-xl">
               {formatPrice(product.originalPrice)}
             </span>
-            <span className="text-xl font-extrabold text-orange-800">
+            <span className="text-base font-extrabold text-orange-800 sm:text-xl">
               {formatPrice(product.price)}
             </span>
-            <span className="rounded-full bg-orange-800 px-3 py-1 text-xs font-bold text-white">
+            <span className="rounded-full bg-orange-800 px-2.5 py-1 text-xs font-bold text-white sm:px-3">
               {product.discount}% OFF
             </span>
           </div>
 
           {/* Variant */}
           <div>
-            <h3 className="mb-2 text-base font-bold text-black">Variant:</h3>
+            <h3 className="mb-2 text-sm font-bold text-black sm:text-base">Variant:</h3>
             <div className="flex flex-col gap-2">
               {product.sizes.map((size) => (
                 <button
                   key={size}
                   onClick={() => setSelectedSize(size)}
-                  className={`rounded-md border border-black/40 bg-gray-200 px-4 py-2 text-sm font-bold transition-all ${
+                  className={`rounded-md border border-black/40 bg-gray-200 px-4 py-2 text-xs font-bold transition-all sm:text-sm ${
                     selectedSize === size
                       ? "ring-2 ring-brand-red"
                       : "hover:bg-gray-300"
@@ -212,26 +216,26 @@ export default function ProductDetailPage() {
             >
               <path d="M17.5 11.6667C17.5 11.6667 17.5 11.6667 16.3917 10.2084C15.1083 8.51675 13.2125 7.29175 10.9375 7.29175C7.30625 7.29175 4.375 10.223 4.375 13.8542C4.375 15.2105 4.78333 16.4647 5.48333 17.5001C6.66458 19.2647 17.5 30.6251 17.5 30.6251M17.5 11.6667C17.5 11.6667 17.5 11.6667 18.6083 10.2084C19.8917 8.51675 21.7875 7.29175 24.0625 7.29175C27.6938 7.29175 30.625 10.223 30.625 13.8542C30.625 15.2105 30.2167 16.4647 29.5167 17.5001C28.3354 19.2647 17.5 30.6251 17.5 30.6251" />
             </svg>
-            <span className="text-base font-bold text-orange-800">
+            <span className="text-sm font-bold text-orange-800 sm:text-base">
               Tambahkan Favorit
             </span>
           </button>
 
           {/* Action Buttons */}
-          <div className="flex gap-4">
+          <div className="flex gap-2 sm:gap-4">
             <Link
               href="/customer/cart"
-              className="flex h-14 flex-1 items-center justify-center rounded-[20px] border-4 border-brand-red bg-white"
+              className="flex h-12 flex-1 items-center justify-center rounded-[20px] border-2 border-brand-red bg-white sm:h-14 sm:border-4"
             >
-              <span className="text-lg font-extrabold text-brand-red">
+              <span className="text-sm font-extrabold text-brand-red sm:text-lg">
                 Keranjang+
               </span>
             </Link>
             <Link
               href="/customer/payment/payment-detail"
-              className="flex h-14 flex-1 items-center justify-center rounded-[20px] bg-brand-red"
+              className="flex h-12 flex-1 items-center justify-center rounded-[20px] bg-brand-red sm:h-14"
             >
-              <span className="text-lg font-extrabold text-white">
+              <span className="text-sm font-extrabold text-white sm:text-lg">
                 Pesan Sekarang
               </span>
             </Link>
@@ -242,17 +246,17 @@ export default function ProductDetailPage() {
 
           {/* Detail Produk */}
           <div>
-            <h2 className="mb-3 text-xl font-bold text-brand-red">Detail Produk</h2>
+            <h2 className="mb-3 text-lg font-bold text-brand-red sm:text-xl">Detail Produk</h2>
 
             {/* Description */}
-            <p className="mb-4 text-base leading-relaxed text-black">
+            <p className="mb-4 text-sm leading-relaxed text-black sm:text-base">
               {product.description}
             </p>
 
             {/* Includes */}
             <div className="mb-4">
-              <h3 className="mb-2 text-base font-semibold text-black">Include:</h3>
-              <ul className="flex list-disc flex-col gap-1 pl-5 text-sm text-black">
+              <h3 className="mb-2 text-sm font-semibold text-black sm:text-base">Include:</h3>
+              <ul className="flex list-disc flex-col gap-1 pl-5 text-xs text-black sm:text-sm">
                 {product.includes.map((item, index) => (
                   <li key={index}>{item}</li>
                 ))}
@@ -268,12 +272,13 @@ export default function ProductDetailPage() {
                     alt="Detail Produk"
                     width={548}
                     height={403}
-                    className="w-full object-cover"
+                    sizes="(max-width: 1024px) 100vw, 548px"
+                    className="h-auto w-full object-cover"
                   />
                 </div>
                 <button
                   onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                  className="h-12 w-full rounded-[20px] bg-brand-red text-base font-bold text-white"
+                  className="h-11 w-full rounded-[20px] bg-brand-red text-sm font-bold text-white sm:h-12 sm:text-base"
                 >
                   Kembali Ke Atas
                 </button>

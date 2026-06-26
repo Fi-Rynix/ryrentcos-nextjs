@@ -66,11 +66,11 @@ export default function SuccessPaymentPage() {
       {/* Main Content */}
       <div className="mx-auto w-full max-w-[1120px] px-4 pt-10">
         {/* Header */}
-        <div className="mb-10 flex flex-col items-center">
-          <h1 className="font-display text-5xl text-brand-red">
+        <div className="mb-10 flex flex-col items-center text-center">
+          <h1 className="font-display text-4xl text-brand-red sm:text-5xl">
             Checkout Payment
           </h1>
-          <div className="mt-7 h-px w-[548px] bg-brand-red" />
+          <div className="mt-7 h-px w-full max-w-[548px] bg-brand-red" />
         </div>
 
         {/* Success Card */}

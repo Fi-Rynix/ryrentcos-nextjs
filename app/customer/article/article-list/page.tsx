@@ -79,7 +79,7 @@ const ARTICLES: ArticleItem[] = [
 function PageTitle() {
   return (
     <div className="flex w-full max-w-[548px] flex-col items-center text-center">
-      <h1 className="font-display text-5xl font-normal leading-[58px] text-brand-red">
+      <h1 className="font-display text-4xl font-normal leading-tight text-brand-red sm:text-5xl sm:leading-[58px]">
         Lastest Update
       </h1>
       <TitleDivider />

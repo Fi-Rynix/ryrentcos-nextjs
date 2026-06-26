@@ -284,11 +284,11 @@ export default function FaqPage() {
     <div className="min-h-screen w-full bg-red-50 pb-20">
       <div className="mx-auto w-full max-w-[1120px] px-4 pt-10">
         {/* Header */}
-        <div className="mb-8 flex flex-col items-center">
-          <h1 className="font-display text-5xl font-normal leading-[58px] text-brand-red">
+        <div className="mb-8 flex flex-col items-center text-center">
+          <h1 className="font-display text-4xl font-normal leading-tight text-brand-red sm:text-5xl sm:leading-[58px]">
             FAQ
           </h1>
-          <div className="mt-7 h-px w-[548px] bg-brand-red" />
+          <div className="mt-7 h-px w-full max-w-[548px] bg-brand-red" />
         </div>
 
         {/* Subtitle */}
