@@ -117,7 +117,7 @@ function ProfileDropdown({
   return (
     <div
       ref={dropdownRef}
-      className={`fixed right-0 top-[88px] z-40 size-64 bg-white shadow-[-8px_8px_8px_0_rgba(0,0,0,0.25)] transition-all duration-200 ${
+      className={`fixed right-0 top-[88px] z-40 size-64 bg-white shadow-[-8px_8px_12px_0_rgba(0,0,0,0.3)] transition-all duration-200 ${
         isOpen
           ? "translate-y-0 opacity-100"
           : "pointer-events-none -translate-y-2 opacity-0"
@@ -128,6 +128,10 @@ function ProfileDropdown({
         <div className="h-px w-full bg-brand-red" />
         <ProfileLink href="/customer/profile" onClick={onClose}>My Profile</ProfileLink>
         <div className="h-px w-full bg-brand-red" />
+        <div className="flex w-full flex-col items-center gap-2.5 md:hidden">
+          <ProfileLink href="/customer/cart" onClick={onClose}>My Cart</ProfileLink>
+          <div className="h-px w-full bg-brand-red" />
+        </div>
         <ProfileLink href="/customer/transaction/transaction-history" onClick={onClose}>My Order</ProfileLink>
         <div className="h-px w-full bg-brand-red" />
         <ProfileLink href="/customer/faq" onClick={onClose}>FAQ</ProfileLink>
@@ -245,8 +249,8 @@ function Header({
 }) {
   return (
     <header className="sticky top-0 z-30 w-full bg-brand-red shadow-[0_8px_0_0_var(--color-brand-accent)]">
-      <div className="w-full px-[80px]">
-        <div className="grid h-20 grid-cols-[1fr_auto_1fr] items-center gap-4">
+      <div className="w-full px-4 sm:px-6 md:px-12 lg:px-20">
+        <div className="grid h-20 grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-4">
           <div className="flex items-center justify-start">
             <button
               type="button"
@@ -257,8 +261,9 @@ function Header({
               <Image
                 src="/icons/hamburger.png"
                 alt=""
-                width={32}
-                height={32}
+                width={28}
+                height={28}
+                className="h-7 w-7 sm:h-8 sm:w-8"
               />
             </button>
           </div>
@@ -270,18 +275,18 @@ function Header({
               width={192}
               height={56}
               priority
-              className="h-14 w-auto"
+              className="h-10 w-auto max-w-[140px] sm:h-14 sm:max-w-none"
             />
           </div>
 
-          <div className="flex items-center justify-end gap-[50px]">
+          <div className="flex items-center justify-end gap-3 sm:gap-6 md:gap-12">
             <Link
               href="/customer/cart"
               type="button"
               aria-label="Cart"
-              className="rounded p-2 hover:bg-white/10"
+              className="hidden rounded p-2 hover:bg-white/10 md:flex"
             >
-              <Image src="/icons/cart.png" alt="" width={28} height={28} />
+              <Image src="/icons/cart.png" alt="" width={28} height={28} className="h-7 w-7" />
             </Link>
             <button
               type="button"

@@ -328,8 +328,8 @@ function WelcomeSection() {
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" className="text-brand-accent opacity-60" aria-hidden="true">
                   <path d="M12 2l2 6.5h6.5l-5 3.9 2 6.6-5.5-4-5.5 4 2-6.6-5-3.9h6.5z" fill="currentColor" />
                 </svg>
-                <div className="flex h-14 w-full max-w-[771px] items-center justify-center rounded-[43px] bg-brand-red-soft px-6 sm:h-16 md:h-20">
-                  <h1 className="font-display text-3xl font-normal leading-tight text-brand-accent sm:text-4xl md:text-6xl md:leading-[68px]">
+                <div className="flex h-12 w-full max-w-[771px] items-center justify-center rounded-[43px] bg-brand-red-soft px-4 sm:h-16 sm:px-6 md:h-20">
+                  <h1 className="font-display text-xl font-normal leading-none text-brand-accent sm:text-4xl md:text-6xl md:leading-[68px]">
                     Welcome Cosplayer !
                   </h1>
                 </div>
@@ -340,7 +340,7 @@ function WelcomeSection() {
             </div>
 
             <p className="relative mt-6 w-full max-w-[930px] text-center text-base font-bold leading-snug text-brand-red-soft sm:text-lg sm:leading-7 md:mt-12 md:text-3xl md:leading-9">
-              <span className="absolute -left-6 top-1/2 -translate-y-1/2 text-brand-accent opacity-50" aria-hidden="true">
+              <span className="absolute -left-6 top-1/2 hidden -translate-y-1/2 text-brand-accent opacity-50 md:block" aria-hidden="true">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2l2 6.5h6.5l-5 3.9 2 6.6-5.5-4-5.5 4 2-6.6-5-3.9h6.5z" />
                 </svg>
@@ -350,7 +350,7 @@ function WelcomeSection() {
               hadir supaya pengalaman cosplay-mu jadi lebih mudah, cepat,
               dan menyenangkan. Kepoin halaman web kita buat info menarik
               lainnya terkait dunia wibu dan animanga!
-              <span className="absolute -right-6 top-1/2 -translate-y-1/2 text-brand-accent opacity-50" aria-hidden="true">
+              <span className="absolute -right-6 top-1/2 hidden -translate-y-1/2 text-brand-accent opacity-50 md:block" aria-hidden="true">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 2l2 6.5h6.5l-5 3.9 2 6.6-5.5-4-5.5 4 2-6.6-5-3.9h6.5z" />
                 </svg>
@@ -641,7 +641,7 @@ function AboutUs() {
         alt=""
         width={120}
         height={110}
-        className="absolute -right-6 bottom-12 h-24 w-24 rotate-12 opacity-60"
+        className="absolute -right-6 bottom-12 hidden h-24 w-24 rotate-12 opacity-60 md:block"
         aria-hidden="true"
       />
 
