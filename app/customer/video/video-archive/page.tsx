@@ -109,39 +109,39 @@ function VideoCard({ item }: { item: VideoItem }) {
       href="/customer/video/video-detail"
       className="group block w-full overflow-hidden rounded-[10px] bg-white shadow-[2px_2px_8px_0px_rgba(0,0,0,0.25)] transition-shadow hover:shadow-[4px_4px_12px_0px_rgba(0,0,0,0.3)]"
     >
-      <div className="flex h-56 items-center gap-10 px-1">
-        {/* Image — 384×208 box, image fills with object-cover */}
-        <div className="relative h-52 w-96 shrink-0 overflow-hidden rounded-[5px]">
+      <div className="flex flex-col items-stretch gap-3 p-3 sm:h-56 sm:flex-row sm:items-center sm:gap-6 sm:p-1 lg:gap-10">
+        {/* Image */}
+        <div className="relative h-40 w-full shrink-0 overflow-hidden rounded-[5px] sm:h-52 sm:w-96">
           <Image
             src={item.image}
             alt={item.title}
             fill
-            sizes="384px"
+            sizes="(max-width: 640px) 100vw, 384px"
             className="object-cover"
             style={{ objectPosition: item.imageSizing.objectPosition }}
           />
           {/* Play button overlay */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/40">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/40 sm:h-12 sm:w-12">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="white" className="sm:h-5 sm:w-5">
                 <path d="M8 5v14l11-7z" />
               </svg>
             </div>
           </div>
         </div>
 
-        {/* Content — 705px column */}
-        <div className="flex w-[705px] flex-col items-start gap-3">
-          <h3 className="line-clamp-2 w-full text-2xl font-bold leading-9 text-black">
+        {/* Content */}
+        <div className="flex w-full flex-col items-start gap-2 sm:w-[705px] sm:gap-3">
+          <h3 className="line-clamp-2 w-full text-base font-bold leading-6 text-black sm:text-xl sm:leading-7 lg:text-2xl lg:leading-9">
             {item.title}
           </h3>
           <div className="flex w-full items-center justify-between">
-            <span className="text-xl font-bold leading-6 text-brand-red">
+            <span className="text-sm font-bold leading-5 text-brand-red sm:text-base sm:leading-6 lg:text-xl">
               {item.duration}
             </span>
           </div>
           <div className="flex w-full items-center justify-between">
-            <span className="text-xl font-bold leading-6 text-brand-red">
+            <span className="text-sm font-bold leading-5 text-brand-red sm:text-base sm:leading-6 lg:text-xl">
               {item.level}
             </span>
           </div>
@@ -212,7 +212,7 @@ export default function VideoArchivePage() {
           <PageTitle />
 
           {/* Video list */}
-          <div className="flex w-full flex-col gap-12">
+          <div className="flex w-full flex-col gap-6 sm:gap-12">
             {VIDEOS.map((item) => (
               <VideoCard key={item.id} item={item} />
             ))}

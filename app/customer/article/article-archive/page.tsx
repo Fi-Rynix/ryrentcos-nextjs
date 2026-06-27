@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { TitleDivider } from "@/app/customer/_components/layout";
 import { Badge, SectionTitle } from "@/app/customer/_components/ui";
 
@@ -242,7 +243,7 @@ function SearchBar() {
  */
 function TrendingHeroCard({ item }: { item: TrendingItem }) {
   return (
-    <article className="group relative h-96 w-full overflow-hidden rounded-[20px] bg-zinc-300 shadow-[0_0_16px_2px_rgba(0,0,0,0.12)] md:h-[465px]">
+    <article className="group relative h-64 w-full overflow-hidden rounded-[20px] bg-zinc-300 shadow-[0_0_16px_2px_rgba(0,0,0,0.12)] md:h-[465px]">
       <Image
         src={item.image}
         alt={item.title}
@@ -253,7 +254,7 @@ function TrendingHeroCard({ item }: { item: TrendingItem }) {
       />
 
       {/* Solid overlay (bukan gradient) — text terbaca konsisten di semua image */}
-      <div className="absolute inset-x-0 bottom-0 flex h-16 flex-col justify-end bg-black/45 px-4 pb-3 pt-10 md:h-40 md:px-6">
+      <div className="absolute inset-x-0 bottom-0 flex h-28 flex-col justify-end bg-black/45 px-4 pb-3 pt-10 md:h-40 md:px-6">
         <div className="flex items-center gap-2">
           <span className="rounded-full bg-brand-red-soft px-2 py-0.5 text-xs font-bold uppercase tracking-wider text-white">
             Editor&apos;s Pick
@@ -325,9 +326,9 @@ function CategoryPajanganButton({ label }: { label: string }) {
   return (
     <div
       aria-hidden="true"
-      className="flex h-20 w-full items-center justify-center rounded-[20px] bg-brand-red px-5"
+      className="flex h-12 w-full items-center justify-center rounded-[20px] bg-brand-red px-3 sm:h-16 sm:px-5"
     >
-      <span className="text-center text-2xl font-extrabold leading-[68px] text-white md:text-3xl">
+      <span className="text-center text-sm font-extrabold leading-tight text-white sm:text-lg md:text-2xl">
         {label}
       </span>
     </div>
@@ -356,13 +357,13 @@ function CategoryPajanganRow() {
  */
 function PopularCard({ item }: { item: NewsItem }) {
   return (
-    <article className="flex w-[210px] shrink-0 grow basis-0 flex-col gap-2 overflow-hidden rounded-[10px] bg-white">
+    <article className="flex w-full max-w-[260px] shrink-0 grow basis-0 flex-col gap-2 overflow-hidden rounded-[10px] bg-white md:w-[210px]">
       <div className="relative aspect-[5/4] w-full shrink-0 overflow-hidden rounded-[5px] bg-zinc-100 shadow-[2px_-2px_4px_0_rgba(0,0,0,0.25)]">
         <Image
           src={item.image}
           alt={item.title}
           fill
-          sizes="210px"
+          sizes="(max-width: 768px) 260px, 210px"
           className="object-cover"
         />
       </div>
@@ -379,6 +380,8 @@ function PopularCard({ item }: { item: NewsItem }) {
 
 /**
  * Single Popular section — Figma: 1120×367 wrapper dengan ring halus untuk depth.
+ * - Mobile: carousel 1 card + prev/next arrows
+ * - Desktop: 4 cards centered
  */
 function PopularSection({
   title,
@@ -387,11 +390,63 @@ function PopularSection({
   title: string;
   items: NewsItem[];
 }) {
+  const [step, setStep] = useState(0);
+  const total = items.length;
+  const prev = () => setStep((s) => (s - 1 + total) % total);
+  const next = () => setStep((s) => (s + 1) % total);
+
   return (
     <div className="flex w-full flex-col gap-4">
       <SectionTitle title={title} />
 
-      <div className="relative h-[380px] w-full overflow-hidden rounded-[20px] bg-white shadow-[0_0_16px_2px_rgba(0,0,0,0.12)] ring-1 ring-zinc-100">
+      {/* Mobile carousel — 1 card centered with arrows */}
+      <div className="relative overflow-hidden rounded-[20px] bg-white p-4 shadow-[0_0_16px_2px_rgba(0,0,0,0.12)] ring-1 ring-zinc-100 md:hidden">
+        <div className="flex items-center justify-center">
+          <PopularCard item={items[step]} />
+        </div>
+
+        {/* Prev button */}
+        <button
+          type="button"
+          onClick={prev}
+          aria-label="Previous article"
+          className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full border-[3px] border-brand-red-soft bg-white p-1.5 text-brand-red shadow-lg transition hover:scale-105"
+        >
+          <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden="true">
+            <path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+
+        {/* Next button */}
+        <button
+          type="button"
+          onClick={next}
+          aria-label="Next article"
+          className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full border-[3px] border-brand-red-soft bg-white p-1.5 text-brand-red shadow-lg transition hover:scale-105"
+        >
+          <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden="true">
+            <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </button>
+
+        {/* Dots */}
+        <div className="mt-3 flex justify-center gap-1.5">
+          {items.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => setStep(i)}
+              aria-label={`Go to slide ${i + 1}`}
+              className={`h-2 rounded-full transition-all ${
+                step === i ? "w-6 bg-brand-red-soft" : "w-2 bg-brand-red-soft/40"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop — original 4-card row */}
+      <div className="relative hidden h-[380px] w-full overflow-hidden rounded-[20px] bg-white shadow-[0_0_16px_2px_rgba(0,0,0,0.12)] ring-1 ring-zinc-100 md:block">
         <div className="absolute inset-x-[26px] top-1/2 flex -translate-y-1/2 flex-row items-center justify-between gap-10 overflow-x-auto pb-4 lg:overflow-visible lg:pb-0">
           {items.map((item) => (
             <PopularCard key={item.id} item={item} />
@@ -442,16 +497,16 @@ function SeeAllButton() {
   return (
     <Link
       href="/customer/article/article-list"
-      className="inline-flex h-16 w-full max-w-[472px] items-center gap-4 overflow-hidden rounded-[43px] bg-brand-red pl-7 pr-6 text-2xl font-bold text-white shadow-md transition-all hover:bg-brand-red-soft hover:shadow-lg active:scale-[0.98] md:text-4xl"
+      className="inline-flex h-12 w-full max-w-[472px] items-center gap-3 overflow-hidden rounded-[43px] bg-brand-red px-6 text-base font-bold text-white shadow-md transition-all hover:bg-brand-red-soft hover:shadow-lg active:scale-[0.98] sm:h-14 sm:gap-4 sm:px-8 sm:text-xl md:h-16 md:text-2xl"
     >
-      <span className="flex-1 text-center md:text-left">Lihat Selanjutan</span>
+      <span className="flex-1 text-center md:text-left">Lihat Selanjutnya</span>
       <svg
-        width="32"
-        height="32"
+        width="24"
+        height="24"
         viewBox="0 0 24 24"
         fill="currentColor"
         aria-hidden="true"
-        className="hidden shrink-0 md:block"
+        className="hidden shrink-0 md:block md:h-8 md:w-8"
       >
         <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z" />
       </svg>

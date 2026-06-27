@@ -114,7 +114,7 @@ export default function CartPage() {
         </div>
 
         {/* Main Content */}
-        <div className="flex gap-8">
+        <div className="flex flex-col gap-6 lg:flex-row lg:gap-8">
           {/* Left - Cart Items */}
           <div className="flex flex-1 flex-col gap-4">
             {items.length === 0 ? (
@@ -131,7 +131,7 @@ export default function CartPage() {
               items.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center gap-4 rounded-[10px] bg-white p-4 shadow-[2px_2px_8px_0px_rgba(0,0,0,0.25)]"
+                  className="flex items-center justify-center gap-3 rounded-[10px] bg-white p-3 shadow-[2px_2px_8px_0px_rgba(0,0,0,0.25)] sm:gap-4 sm:p-4"
                 >
                   {/* Checkbox */}
                   <Checkbox
@@ -140,33 +140,34 @@ export default function CartPage() {
                   />
 
                   {/* Image */}
-                  <div className="relative h-32 w-32 shrink-0 overflow-hidden rounded-[5px]">
+                  <div className="relative h-20 w-20 shrink-0 overflow-hidden rounded-[5px] sm:h-32 sm:w-32">
                     <Image
                       src={item.image}
                       alt={item.name}
                       fill
+                      sizes="(max-width: 640px) 80px, 128px"
                       className="object-cover object-left-top"
                     />
                   </div>
 
                   {/* Details */}
-                  <div className="flex flex-1 flex-col gap-2">
+                  <div className="flex min-w-0 flex-1 flex-col gap-1.5 sm:gap-2">
                     {/* Name + Actions */}
-                    <div className="flex items-start justify-between gap-4">
-                      <h3 className="text-base font-bold leading-5 text-black">
+                    <div className="flex items-start justify-between gap-2">
+                      <h3 className="line-clamp-2 text-sm font-bold leading-5 text-black sm:text-base">
                         {item.name}
                       </h3>
-                      <div className="flex shrink-0 gap-2">
-                        <button className="flex h-6 w-16 items-center justify-center rounded-sm border border-brand-red bg-white">
-                          <span className="text-xs font-bold text-brand-red">
+                      <div className="flex shrink-0 gap-1.5 sm:gap-2">
+                        <button className="flex h-6 w-14 items-center justify-center rounded-sm border border-brand-red bg-white sm:w-16">
+                          <span className="text-[11px] font-bold text-brand-red sm:text-xs">
                             Edit
                           </span>
                         </button>
                         <button
                           onClick={() => removeItem(item.id)}
-                          className="flex h-6 w-16 items-center justify-center rounded-sm bg-brand-red"
+                          className="flex h-6 w-14 items-center justify-center rounded-sm bg-brand-red sm:w-16"
                         >
-                          <span className="text-xs font-bold text-white">
+                          <span className="text-[11px] font-bold text-white sm:text-xs">
                             Hapus
                           </span>
                         </button>
@@ -175,12 +176,12 @@ export default function CartPage() {
 
                     {/* Price */}
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-black">Price:</span>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-bold text-brand-red line-through">
+                      <span className="text-xs font-bold text-black sm:text-sm">Price:</span>
+                      <div className="flex items-center gap-1.5 sm:gap-2">
+                        <span className="text-xs font-bold text-brand-red line-through sm:text-sm">
                           {formatPrice(item.originalPrice)}
                         </span>
-                        <span className="text-sm font-bold text-orange-800">
+                        <span className="text-xs font-bold text-orange-800 sm:text-sm">
                           {formatPrice(item.price)}
                         </span>
                       </div>
@@ -188,14 +189,14 @@ export default function CartPage() {
 
                     {/* Size */}
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-black">Size Variant:</span>
-                      <span className="text-sm font-bold text-orange-800">{item.size}</span>
+                      <span className="text-xs font-bold text-black sm:text-sm">Size Variant:</span>
+                      <span className="text-xs font-bold text-orange-800 sm:text-sm">{item.size}</span>
                     </div>
 
                     {/* Rent Date */}
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-bold text-black">Rent Date:</span>
-                      <span className="text-sm font-bold text-orange-800">{item.rentDate}</span>
+                      <span className="text-xs font-bold text-black sm:text-sm">Rent Date:</span>
+                      <span className="text-xs font-bold text-orange-800 sm:text-sm">{item.rentDate}</span>
                     </div>
                   </div>
                 </div>
@@ -204,9 +205,9 @@ export default function CartPage() {
           </div>
 
           {/* Right - Order Summary */}
-          <div className="w-80 shrink-0">
-            <div className="sticky top-6 rounded-[10px] bg-white p-6 shadow-[2px_2px_8px_0px_rgba(0,0,0,0.25)]">
-              <h2 className="mb-4 text-center text-xl font-extrabold text-black">
+          <div className="w-full lg:w-80 lg:shrink-0">
+            <div className="rounded-[10px] bg-white p-4 shadow-[2px_2px_8px_0px_rgba(0,0,0,0.25)] sm:p-6 lg:sticky lg:top-6">
+              <h2 className="mb-4 text-center text-lg font-extrabold text-black sm:text-xl">
                 Ringkasan Pesanan
               </h2>
 

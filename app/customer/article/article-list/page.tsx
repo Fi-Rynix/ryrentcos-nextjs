@@ -122,9 +122,9 @@ function ArticleCard({ item }: { item: ArticleItem }) {
   return (
     <Link
       href="/customer/article/article-detail"
-      className="group flex h-56 w-full flex-col gap-4 overflow-hidden rounded-[10px] bg-white p-4 shadow-[2px_2px_8px_0px_rgba(0,0,0,0.25)] transition-shadow hover:shadow-[4px_4px_12px_0px_rgba(0,0,0,0.3)] sm:h-44 sm:flex-row sm:items-center sm:gap-6 sm:p-5"
+      className="group flex w-full flex-col gap-3 overflow-hidden rounded-[10px] bg-white p-3 shadow-[2px_2px_8px_0px_rgba(0,0,0,0.25)] transition-shadow hover:shadow-[4px_4px_12px_0px_rgba(0,0,0,0.3)] sm:h-44 sm:flex-row sm:items-center sm:gap-6 sm:p-5"
     >
-      <div className="relative h-44 w-full overflow-hidden rounded-[5px] bg-zinc-100 sm:h-full sm:w-52">
+      <div className="relative h-32 w-full shrink-0 overflow-hidden rounded-[5px] bg-zinc-100 sm:h-full sm:w-52">
         <Image
           src={item.image}
           alt={item.title}
@@ -134,12 +134,12 @@ function ArticleCard({ item }: { item: ArticleItem }) {
         />
       </div>
 
-      <div className="flex flex-1 flex-col items-start justify-center gap-3">
-        <h3 className="line-clamp-2 text-2xl font-bold leading-9 text-black">
+      <div className="flex flex-1 flex-col items-start justify-center gap-2 sm:gap-3">
+        <h3 className="line-clamp-2 text-base font-bold leading-6 text-black sm:text-xl sm:leading-7 lg:text-2xl lg:leading-9">
           {item.title}
         </h3>
-        <p className="text-xl font-bold leading-6 text-brand-red">{item.date}</p>
-        <p className="text-xl font-bold leading-6 text-brand-red">
+        <p className="text-sm font-bold leading-5 text-brand-red sm:text-base sm:leading-6 lg:text-xl">{item.date}</p>
+        <p className="text-sm font-bold leading-5 text-brand-red sm:text-base sm:leading-6 lg:text-xl">
           {item.time} WIB
         </p>
       </div>
@@ -156,13 +156,13 @@ function Pagination() {
   const pages = [1, 2, 3, 4];
 
   return (
-    <div className="inline-flex items-center gap-5">
+    <div className="inline-flex items-center gap-3 sm:gap-5">
       {/* Page numbers */}
       {pages.map((page, index) => (
         <button
           key={page}
           type="button"
-          className={`relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-full text-2xl font-bold leading-8 transition-colors ${
+          className={`relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full text-base font-bold leading-5 transition-colors sm:h-12 sm:w-12 sm:text-2xl sm:leading-8 ${
             index === 0
               ? "bg-brand-red-soft text-white"
               : "border-2 border-brand-red-soft text-brand-red hover:bg-brand-red hover:text-white"
@@ -175,15 +175,16 @@ function Pagination() {
       {/* Left arrow (prev) */}
       <button
         type="button"
-        className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-full border-2 border-brand-red-soft transition-colors hover:bg-brand-red hover:text-white"
+        className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border-2 border-brand-red-soft transition-colors hover:bg-brand-red hover:text-white sm:h-12 sm:w-12"
         aria-label="Previous page"
       >
         <svg
-          width="24"
-          height="24"
+          width="20"
+          height="20"
           viewBox="0 0 24 24"
           fill="none"
           aria-hidden="true"
+          className="sm:h-6 sm:w-6"
         >
           <path
             fillRule="evenodd"
@@ -204,7 +205,7 @@ export default function ArticleListPage() {
   return (
     <div className="min-h-screen w-full bg-brand-base-soft">
       <div className="mx-auto w-full max-w-[1129px] px-4 pb-16 pt-10 md:px-6 lg:px-0">
-        <div className="flex flex-col items-center gap-16">
+        <div className="flex flex-col items-center gap-8 sm:gap-12 lg:gap-16">
           {/* Title */}
           <PageTitle />
 
@@ -215,7 +216,7 @@ export default function ArticleListPage() {
           </div>
 
           {/* Article List */}
-          <div className="flex w-full flex-col gap-12">
+          <div className="flex w-full flex-col gap-6 sm:gap-12">
             {ARTICLES.map((item) => (
               <ArticleCard key={item.id} item={item} />
             ))}

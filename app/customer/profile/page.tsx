@@ -135,8 +135,8 @@ function ProfileInfoItem({
         {icon}
       </span>
       <div className="flex flex-col gap-1">
-        <span className="text-sm font-normal text-gray-600">{label}</span>
-        <span className="text-base font-normal text-brand-red">{value}</span>
+        <span className="text-xs font-normal text-gray-600 sm:text-sm">{label}</span>
+        <span className="text-sm font-bold leading-snug text-brand-red sm:text-base">{value}</span>
       </div>
     </div>
   );
@@ -168,9 +168,9 @@ export default function ProfilePage() {
           <div className="mt-7 h-px w-full max-w-[548px] bg-brand-red" />
         </div>
 
-        <div className="mb-8 w-full rounded-xl bg-brand-red p-6">
-          <div className="flex items-center gap-6">
-            <div className="flex h-32 w-32 shrink-0 items-center justify-center overflow-hidden rounded-full bg-orange-800 shadow-md">
+        <div className="mb-8 w-full rounded-xl bg-brand-red p-4 sm:p-6">
+          <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-center sm:gap-6">
+            <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-full bg-orange-800 shadow-md sm:h-32 sm:w-32">
               <Image
                 src={USER_PROFILE.profileImage}
                 alt={USER_PROFILE.name}
@@ -180,31 +180,31 @@ export default function ProfilePage() {
               />
             </div>
 
-            <div className="flex flex-1 flex-col gap-2">
-              <div>
-                <h2 className="text-base font-normal text-white">{USER_PROFILE.name}</h2>
-                <p className="text-base font-normal text-orange-300">{USER_PROFILE.email}</p>
+            <div className="flex flex-1 flex-col items-center gap-3 sm:items-start sm:gap-2">
+              <div className="text-center sm:text-left">
+                <h2 className="text-lg font-bold text-white sm:text-xl">{USER_PROFILE.name}</h2>
+                <p className="text-sm font-normal text-orange-300 sm:text-base">{USER_PROFILE.email}</p>
               </div>
 
-              <div className="flex gap-4">
-                <div className="flex h-14 items-center gap-2 rounded-[10px] bg-orange-800 px-4">
+              <div className="flex w-full flex-wrap justify-center gap-3 sm:justify-start sm:gap-4">
+                <div className="flex h-14 flex-1 items-center gap-2 rounded-[10px] bg-orange-800 px-3 sm:flex-none sm:px-4">
                   <span className="text-white"><IconStar /></span>
                   <div className="flex flex-col">
-                    <span className="text-sm font-normal text-orange-300">Total Pesanan</span>
-                    <span className="text-base font-normal text-white">{USER_PROFILE.totalOrders}</span>
+                    <span className="text-xs font-normal text-orange-300 sm:text-sm">Total Pesanan</span>
+                    <span className="text-sm font-bold text-white sm:text-base">{USER_PROFILE.totalOrders}</span>
                   </div>
                 </div>
-                <div className="flex h-14 items-center gap-2 rounded-[10px] bg-orange-800 px-4">
+                <div className="flex h-14 flex-1 items-center gap-2 rounded-[10px] bg-orange-800 px-3 sm:flex-none sm:px-4">
                   <span className="text-white"><IconHeart /></span>
                   <div className="flex flex-col">
-                    <span className="text-sm font-normal text-orange-300">Kostum Favorit</span>
-                    <span className="text-base font-normal text-white">{USER_PROFILE.totalFavorites}</span>
+                    <span className="text-xs font-normal text-orange-300 sm:text-sm">Kostum Favorit</span>
+                    <span className="text-sm font-bold text-white sm:text-base">{USER_PROFILE.totalFavorites}</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <button className="flex h-9 items-center gap-2 rounded-lg bg-white px-4">
+            <button className="flex h-9 w-full items-center justify-center gap-2 rounded-lg bg-white px-4 sm:w-auto">
               <span className="text-brand-red"><IconEdit /></span>
               <span className="text-sm font-bold text-brand-red">Edit Profil</span>
             </button>
@@ -213,8 +213,8 @@ export default function ProfilePage() {
 
         <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
           <div className="flex-1 overflow-hidden rounded-xl bg-white shadow-md">
-            <div className="p-6">
-              <h3 className="mb-6 text-base font-normal text-red-800">Informasi Pribadi</h3>
+            <div className="p-4 sm:p-6">
+              <h3 className="mb-6 text-lg font-bold text-red-800 sm:text-xl">Informasi Pribadi</h3>
 
               <div className="flex flex-col gap-4">
                 <ProfileInfoItem icon={<IconUser />} label="Nama Lengkap" value={USER_PROFILE.name} />
@@ -227,13 +227,13 @@ export default function ProfilePage() {
           </div>
 
           <div className="flex w-full flex-col gap-6 lg:w-96 lg:shrink-0">
-            <div className="overflow-hidden rounded-xl bg-white p-6 shadow-md">
-              <h3 className="mb-4 text-lg font-bold text-red-800">Tentang Saya</h3>
-              <p className="text-base font-normal text-gray-700">{USER_PROFILE.bio}</p>
+            <div className="overflow-hidden rounded-xl bg-white p-4 shadow-md sm:p-6">
+              <h3 className="mb-4 text-lg font-bold text-red-800 sm:text-xl">Tentang Saya</h3>
+              <p className="text-sm leading-relaxed text-gray-700 sm:text-base">{USER_PROFILE.bio}</p>
             </div>
 
-            <div className="overflow-hidden rounded-xl bg-white p-6 shadow-md">
-              <h3 className="mb-4 text-base font-normal text-red-800">Menu Cepat</h3>
+            <div className="overflow-hidden rounded-xl bg-white p-4 shadow-md sm:p-6">
+              <h3 className="mb-4 text-lg font-bold text-red-800 sm:text-xl">Menu Cepat</h3>
               <div className="flex flex-col gap-2">
                 <Link href="/customer/transaction/transaction-history">
                   <QuickMenuButton label="Pesanan Saya" />
@@ -247,20 +247,20 @@ export default function ProfilePage() {
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-xl bg-brand-red p-6 shadow-lg">
-              <h3 className="mb-4 text-lg font-bold text-white">Status Member</h3>
+            <div className="overflow-hidden rounded-xl bg-brand-red p-4 shadow-lg sm:p-6">
+              <h3 className="mb-4 text-lg font-bold text-white sm:text-xl">Status Member</h3>
               <div className="flex flex-col gap-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-base font-normal text-orange-300">Level</span>
-                  <span className="text-base font-normal text-white">{USER_PROFILE.memberLevel}</span>
+                  <span className="text-sm font-normal text-orange-300 sm:text-base">Level</span>
+                  <span className="text-sm font-bold text-white sm:text-base">{USER_PROFILE.memberLevel}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-base font-normal text-orange-300">Bergabung</span>
-                  <span className="text-base font-normal text-white">{USER_PROFILE.memberSince}</span>
+                  <span className="text-sm font-normal text-orange-300 sm:text-base">Bergabung</span>
+                  <span className="text-sm font-bold text-white sm:text-base">{USER_PROFILE.memberSince}</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-base font-normal text-orange-300">Poin</span>
-                  <span className="text-base font-normal text-white">{USER_PROFILE.points.toLocaleString()}</span>
+                  <span className="text-sm font-normal text-orange-300 sm:text-base">Poin</span>
+                  <span className="text-sm font-bold text-white sm:text-base">{USER_PROFILE.points.toLocaleString()}</span>
                 </div>
               </div>
             </div>

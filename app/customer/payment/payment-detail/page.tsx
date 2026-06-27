@@ -184,7 +184,7 @@ export default function CheckoutPage() {
 
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-black">Rent Date:</span>
-                    <span className="text-sm font-bold text-orange-800">
+                    <span className="text-right text-sm font-bold text-orange-800">
                       {item.rentDate}
                     </span>
                   </div>
@@ -195,9 +195,9 @@ export default function CheckoutPage() {
 
           {/* Card 3: Pilih Metode Bayar & Rincian Pembayaran */}
           <div className="flex flex-col gap-4">
-            <div className="flex gap-4">
+            <div className="flex flex-col gap-4 lg:flex-row">
               {/* Left: Pilih Metode Bayar */}
-              <div className="w-80 shrink-0 rounded-[10px] bg-white p-4 shadow-[2px_2px_8px_0px_rgba(0,0,0,0.25)]">
+              <div className="w-full rounded-[10px] bg-white p-4 shadow-[2px_2px_8px_0px_rgba(0,0,0,0.25)] lg:w-80 lg:shrink-0">
                 <h2 className="text-xl font-bold text-brand-red">Pilih Metode Bayar</h2>
                 <div className="mt-3 h-px w-full bg-brand-red" />
 

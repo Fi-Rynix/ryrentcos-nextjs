@@ -44,13 +44,13 @@ export function SectionTitle({
 }) {
   return (
     <div className="flex w-full flex-col gap-1">
-      <div className="flex w-full items-start justify-between gap-2">
+      <div className="flex w-full items-end justify-between gap-2">
         <h2 className="text-2xl font-bold leading-8 text-black">{title}</h2>
         {showSeeAll && (
           <button
             type="button"
             onClick={onSeeAll}
-            className="text-base font-bold leading-5 text-orange-800 transition-colors hover:underline"
+            className="pb-1 text-base font-bold leading-5 text-orange-800 transition-colors hover:underline"
           >
             {seeAllLabel}
           </button>

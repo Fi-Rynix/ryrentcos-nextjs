@@ -25,8 +25,8 @@ const ORDER_DATA: OrderData = {
 export default function SuccessPaymentPage() {
   return (
     <div className="min-h-screen w-full bg-red-50 overflow-hidden relative">
-      {/* Background maple leaves */}
-      <div className="absolute left-6 top-16 z-10">
+      {/* Background maple leaves — desktop only */}
+      <div className="absolute left-6 top-16 z-10 hidden lg:block">
         <Image
           src="/icons/custom/leaf-left.png"
           alt=""
@@ -35,7 +35,7 @@ export default function SuccessPaymentPage() {
           className="object-contain"
         />
       </div>
-      <div className="absolute left-20 top-72 z-10">
+      <div className="absolute left-20 top-72 z-10 hidden lg:block">
         <Image
           src="/icons/custom/maple-left.png"
           alt=""
@@ -44,7 +44,7 @@ export default function SuccessPaymentPage() {
           className="object-contain"
         />
       </div>
-      <div className="absolute right-16 bottom-32 z-10">
+      <div className="absolute right-16 bottom-32 z-10 hidden lg:block">
         <Image
           src="/icons/custom/leaf-right.png"
           alt=""
@@ -53,7 +53,7 @@ export default function SuccessPaymentPage() {
           className="object-contain"
         />
       </div>
-      <div className="absolute right-24 top-20 z-10">
+      <div className="absolute right-24 top-20 z-10 hidden lg:block">
         <Image
           src="/icons/custom/maple-right.png"
           alt=""
