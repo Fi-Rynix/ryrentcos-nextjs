@@ -91,9 +91,9 @@ function StatCard({
   value: string | number;
 }) {
   return (
-    <div className="flex h-24 flex-1 flex-col gap-1 rounded-[10px] bg-white px-6 pt-6 shadow-md">
-      <span className="text-sm font-bold text-black">{label}</span>
-      <span className="text-base text-gray-900">{value}</span>
+    <div className="flex h-24 flex-1 flex-col justify-center gap-1 rounded-[10px] bg-white px-4 py-4 shadow-md sm:px-6 sm:pt-6">
+      <span className="text-xs font-bold text-black sm:text-sm">{label}</span>
+      <span className="text-sm text-gray-900 sm:text-base">{value}</span>
     </div>
   );
 }
@@ -111,7 +111,7 @@ function VideoCard({
   onDelete: () => void;
 }) {
   return (
-    <div className="w-80 overflow-hidden rounded-[10px] bg-white shadow-md">
+    <div className="w-full max-w-sm overflow-hidden rounded-[10px] bg-white shadow-md md:w-80">
       {/* Thumbnail */}
       <div className="relative h-48 overflow-hidden bg-gray-100">
         <Image
@@ -248,11 +248,11 @@ export default function ManageVideoPage() {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4 sm:gap-6">
       {/* Header Actions */}
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         {/* Search */}
-        <div className="relative flex-1 lg:max-w-md">
+        <div className="relative w-full sm:flex-1 sm:max-w-md">
           <svg
             className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400"
             width="16"
@@ -281,7 +281,7 @@ export default function ManageVideoPage() {
         <button
           type="button"
           onClick={() => setShowCreateModal(true)}
-          className="flex h-9 items-center justify-center gap-2 rounded-lg bg-orange-800 px-4 text-sm font-bold text-white transition hover:bg-orange-700"
+          className="flex h-9 w-full shrink-0 items-center justify-center gap-2 rounded-lg bg-orange-800 px-4 text-sm font-bold text-white transition hover:bg-orange-700 sm:w-auto"
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path
@@ -297,14 +297,14 @@ export default function ManageVideoPage() {
       </div>
 
       {/* Stats Cards */}
-      <div className="flex justify-center gap-5">
+      <div className="grid grid-cols-3 gap-2 sm:gap-5">
         <StatCard label="Total Video" value={videos.length} />
         <StatCard label="Total Views" value={formatViews(totalViews)} />
         <StatCard label="Rata-rata Views" value={formatViews(avgViews)} />
       </div>
 
       {/* Video Grid */}
-      <div className="flex flex-wrap justify-center gap-5">
+      <div className="flex flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-5">
         {filteredVideos.length === 0 ? (
           <div className="flex w-full flex-col items-center justify-center gap-3 py-12">
             <svg

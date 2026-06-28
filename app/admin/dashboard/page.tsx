@@ -249,12 +249,12 @@ function StatCard({ label, value, icon }: StatCard) {
   const Icon = ICONS[icon] || IconTrending;
 
   return (
-    <div className="h-24 bg-white rounded-2xl shadow-[0px_2px_4px_-2px_rgba(0,0,0,0.10)] p-6 flex justify-between items-center">
-      <div className="flex flex-col gap-1">
-        <span className="text-sm font-bold text-gray-900 leading-5">{label}</span>
-        <span className="text-lg font-semibold text-gray-900 leading-6">{value}</span>
+    <div className="h-24 bg-white rounded-2xl shadow-[0px_2px_4px_-2px_rgba(0,0,0,0.10)] p-4 sm:p-6 flex justify-between items-center gap-3">
+      <div className="flex flex-col gap-1 min-w-0">
+        <span className="text-xs font-bold text-gray-900 leading-5 sm:text-sm">{label}</span>
+        <span className="text-base font-semibold text-gray-900 leading-6 sm:text-lg">{value}</span>
       </div>
-      <div className="w-12 h-12 bg-stone-100 rounded-[10px] flex items-center justify-center">
+      <div className="w-10 h-10 bg-stone-100 rounded-[10px] flex items-center justify-center shrink-0 sm:w-12 sm:h-12">
         <Icon />
       </div>
     </div>
@@ -285,13 +285,13 @@ function CustomTooltip({ active, payload }: { active?: boolean; payload?: Array<
 
 function MonthlyRevenueChart() {
   return (
-    <div className="flex-1 bg-white rounded-2xl shadow-[0px_2px_4px_-2px_rgba(0,0,0,0.10)] p-6">
+    <div className="flex-1 bg-white rounded-2xl shadow-[0px_2px_4px_-2px_rgba(0,0,0,0.10)] p-4 sm:p-6 min-w-0">
       <h3 className="text-base font-bold text-gray-900 leading-4 mb-6">Pendapatan Bulanan</h3>
-      
-      <ResponsiveContainer width="100%" height={280}>
+
+      <ResponsiveContainer width="100%" height={240} minHeight={240}>
         <AreaChart
           data={CHART_DATA}
-          margin={{ top: 10, right: 10, left: 0, bottom: 0 }}
+          margin={{ top: 10, right: 0, left: -10, bottom: 0 }}
         >
           <defs>
             <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
@@ -340,7 +340,7 @@ function MonthlyRevenueChart() {
  */
 function ReportCard({ data }: { data: ReportData }) {
   return (
-    <div className="w-80 bg-white rounded-2xl shadow-[0px_2px_4px_-2px_rgba(0,0,0,0.10)] p-6">
+    <div className="w-full bg-white rounded-2xl shadow-[0px_2px_4px_-2px_rgba(0,0,0,0.10)] p-4 sm:p-6 lg:w-80">
       <h3 className="text-base font-bold text-gray-900 leading-4 mb-6">Laporan</h3>
 
       <div className="flex flex-col gap-4">
@@ -380,27 +380,28 @@ function ReportCard({ data }: { data: ReportData }) {
  */
 function OrderItem({ order }: { order: RecentOrder }) {
   return (
-    <div className="self-stretch h-24 px-4 bg-white rounded-[10px] shadow-[0px_1px_8px_0px_rgba(0,0,0,0.25)] flex justify-between items-center">
-      <div className="flex items-center gap-4">
-        <div className="flex flex-col gap-1">
-          {/* Order ID + Status */}
-          <div className="flex items-center gap-2">
-            <span className="text-base font-normal text-gray-900">{order.id}</span>
-            <span className="px-3 py-1 bg-orange-300 rounded-full text-xs font-normal text-red-800">
-              {order.status}
-            </span>
-          </div>
-          {/* Customer + Product */}
-          <div className="flex gap-1">
-            <span className="text-sm font-normal text-gray-600">{order.customerName} - </span>
-            <span className="text-sm font-bold text-gray-600">{order.productType} {order.productName}</span>
-          </div>
-          {/* Time */}
-          <span className="text-xs font-normal text-gray-500">{order.time}</span>
+    <div className="self-stretch bg-white rounded-[10px] shadow-[0px_1px_8px_0px_rgba(0,0,0,0.25)] p-4 sm:h-24 sm:px-4 sm:flex sm:justify-between sm:items-center">
+      <div className="flex flex-col gap-2 sm:flex-1">
+        {/* Order ID + Status */}
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-sm font-bold text-gray-900 sm:text-base sm:font-normal">{order.id}</span>
+          <span className="px-2.5 py-0.5 bg-orange-300 rounded-full text-xs font-normal text-red-800 sm:px-3 sm:py-1">
+            {order.status}
+          </span>
+        </div>
+        {/* Customer + Product */}
+        <div className="flex flex-wrap gap-x-1">
+          <span className="text-xs text-gray-600 sm:text-sm">{order.customerName} - </span>
+          <span className="text-xs font-bold text-gray-600 sm:text-sm">{order.productType} {order.productName}</span>
+        </div>
+        {/* Time + Amount (mobile: amount below time) */}
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <span className="text-xs text-gray-500">{order.time}</span>
+          <span className="text-sm font-semibold text-orange-800 sm:hidden">{order.amount}</span>
         </div>
       </div>
-      {/* Amount */}
-      <span className="text-base font-normal text-orange-800">{order.amount}</span>
+      {/* Amount (desktop only) */}
+      <span className="hidden text-base font-normal text-orange-800 sm:block">{order.amount}</span>
     </div>
   );
 }
@@ -410,16 +411,16 @@ function OrderItem({ order }: { order: RecentOrder }) {
    ============================================================ */
 export default function DashboardPage() {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4 sm:gap-6">
       {/* Stats Cards Row */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
         {STAT_CARDS.map((card, index) => (
           <StatCard key={index} {...card} />
         ))}
       </div>
 
       {/* Chart + Report Row */}
-      <div className="flex gap-4">
+      <div className="flex flex-col gap-4 lg:flex-row">
         <MonthlyRevenueChart />
         <ReportCard data={REPORT_DATA} />
       </div>
@@ -427,7 +428,7 @@ export default function DashboardPage() {
       {/* Recent Orders */}
       <div className="self-stretch bg-white rounded-2xl shadow-[0px_2px_4px_-2px_rgba(0,0,0,0.10)]">
         {/* Header */}
-        <div className="h-14 px-6 flex justify-between items-center border-b border-gray-100">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-gray-100 p-4 sm:h-14 sm:px-6">
           <h3 className="text-base font-normal text-gray-900 leading-4">Pesanan Terkini</h3>
           <Link
             href="/admin/manage-transaction"
@@ -439,7 +440,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Orders List */}
-        <div className="flex flex-col gap-4 p-6">
+        <div className="flex flex-col gap-3 p-4 sm:gap-4 sm:p-6">
           {RECENT_ORDERS.map((order) => (
             <OrderItem key={order.id} order={order} />
           ))}

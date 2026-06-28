@@ -78,7 +78,7 @@ export default function TransactionDetailModal({ transaction, onClose }: Transac
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
       <div className="absolute inset-0" onClick={onClose} aria-hidden="true" />
 
-      <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white p-6 shadow-xl scrollbar-hide">
+      <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl bg-white p-4 shadow-xl scrollbar-hide sm:p-6">
         <style jsx>{`
           .scrollbar-hide::-webkit-scrollbar {
             width: 6px;
@@ -112,7 +112,7 @@ export default function TransactionDetailModal({ transaction, onClose }: Transac
         </div>
 
         {/* Order Info Card */}
-        <div className="mb-6 grid grid-cols-3 gap-4 rounded-xl bg-zinc-50 p-4">
+        <div className="mb-6 grid grid-cols-1 gap-3 rounded-xl bg-zinc-50 p-4 sm:grid-cols-3 sm:gap-4">
           <div>
             <p className="text-xs text-zinc-500">Tanggal Order</p>
             <p className="text-sm font-medium text-neutral-950">{transaction.orderDate}</p>
@@ -177,7 +177,7 @@ export default function TransactionDetailModal({ transaction, onClose }: Transac
         {/* Status Update */}
         <div className="mb-6">
           <h3 className="mb-3 text-sm font-bold text-zinc-700">Update Status</h3>
-          <div className="grid grid-cols-4 gap-2">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
             {(["order_masuk", "dikirim", "kembali", "selesai"] as OrderStatus[]).map((status) => {
               const color = getStatusColor(status);
               const isActive = selectedStatus === status;
@@ -206,11 +206,11 @@ export default function TransactionDetailModal({ transaction, onClose }: Transac
         </div>
 
         {/* Actions */}
-        <div className="flex items-center justify-end gap-3">
+        <div className="mt-2 flex flex-col-reverse gap-2 sm:flex-row sm:items-center sm:justify-end sm:gap-3">
           <button
             type="button"
             onClick={onClose}
-            className="h-12 rounded-xl border-2 border-zinc-200 px-6 text-sm font-semibold text-zinc-600 transition hover:bg-zinc-50"
+            className="h-11 rounded-xl border-2 border-zinc-200 px-6 text-sm font-semibold text-zinc-600 transition hover:bg-zinc-50 sm:h-12"
           >
             Tutup
           </button>

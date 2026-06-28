@@ -197,7 +197,7 @@ export default function ArticleEditModal({ article, onClose }: ArticleEditModalP
             <label className="text-sm font-semibold text-zinc-700">Deskripsi</label>
             <div className="flex flex-col rounded-xl border-2 border-zinc-200 overflow-hidden focus-within:border-brand-red focus-within:ring-2 focus-within:ring-brand-red/20">
               {/* Toolbar */}
-              <div className="flex items-center gap-1 border-b border-zinc-200 bg-zinc-50 px-2 py-1">
+              <div className="flex items-center gap-1 overflow-x-auto border-b border-zinc-200 bg-zinc-50 px-2 py-1 scrollbar-hide">
                 <ToolbarButton
                   command="bold"
                   title="Bold (Ctrl+B)"
@@ -313,18 +313,18 @@ export default function ArticleEditModal({ article, onClose }: ArticleEditModalP
           </div>
 
           {/* Actions */}
-          <div className="mt-2 flex items-center justify-end gap-3">
+          <div className="mt-2 flex flex-col-reverse gap-2 sm:flex-row sm:items-center sm:justify-end sm:gap-3">
             <button
               type="button"
               onClick={onClose}
-              className="h-12 rounded-xl border-2 border-zinc-200 px-6 text-sm font-semibold text-zinc-600 transition hover:bg-zinc-50"
+              className="h-11 rounded-xl border-2 border-zinc-200 px-6 text-sm font-semibold text-zinc-600 transition hover:bg-zinc-50 sm:h-12"
             >
               Batal
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex h-12 items-center justify-center gap-2 rounded-xl bg-brand-red px-6 text-sm font-bold text-white shadow-[3px_3px_0_0_rgba(0,0,0,0.15)] transition hover:bg-brand-red-soft disabled:cursor-not-allowed disabled:opacity-70 active:translate-x-[2px] active:translate-y-[2px] active:shadow-none"
+              className="flex h-11 items-center justify-center gap-2 rounded-xl bg-brand-red px-6 text-sm font-bold text-white shadow-[3px_3px_0_0_rgba(0,0,0,0.15)] transition hover:bg-brand-red-soft disabled:cursor-not-allowed disabled:opacity-70 active:translate-x-[2px] active:translate-y-[2px] active:shadow-none sm:h-12"
             >
               {isSubmitting ? (
                 <>

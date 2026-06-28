@@ -90,9 +90,9 @@ function ArticleCard({
   onDelete: () => void;
 }) {
   return (
-    <div className="flex h-44 w-full flex-col overflow-hidden rounded-[10px] bg-white p-4 shadow-md sm:h-44 sm:flex-row sm:items-center sm:gap-5 sm:p-5">
+    <div className="flex w-full flex-col overflow-hidden rounded-[10px] bg-white p-3 shadow-md sm:h-44 sm:flex-row sm:items-center sm:gap-5 sm:p-5">
       {/* Image */}
-      <div className="relative h-44 w-full shrink-0 overflow-hidden rounded-[5px] bg-zinc-100 sm:h-full sm:w-52">
+      <div className="relative h-40 w-full shrink-0 overflow-hidden rounded-[5px] bg-zinc-100 sm:h-full sm:w-52">
         <Image
           src={article.image}
           alt={article.title}
@@ -103,7 +103,7 @@ function ArticleCard({
       </div>
 
       {/* Content */}
-      <div className="flex flex-1 flex-col items-start justify-center gap-2 sm:gap-3">
+      <div className="mt-3 flex flex-1 flex-col items-start justify-center gap-2 sm:mt-0 sm:gap-3">
         {/* Category Badge */}
         <span className={`inline-flex h-5 items-center justify-center rounded-sm px-2 text-xs font-bold ${
           article.category === "AniManga"
@@ -116,12 +116,12 @@ function ArticleCard({
         </span>
 
         {/* Title */}
-        <h3 className="line-clamp-2 text-base font-bold leading-snug text-black sm:text-xl">
+        <h3 className="line-clamp-2 text-sm font-bold leading-snug text-black sm:text-base">
           {article.title}
         </h3>
 
         {/* Meta */}
-        <span className="text-sm font-bold text-brand-red">{article.createdAt}</span>
+        <span className="text-xs font-bold text-brand-red sm:text-sm">{article.createdAt}</span>
       </div>
 
       {/* Action Buttons */}
@@ -203,11 +203,11 @@ export default function ManageArticlePage() {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4 sm:gap-6">
       {/* Header Actions */}
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         {/* Search */}
-        <div className="relative flex-1 lg:max-w-md">
+        <div className="relative w-full sm:flex-1 sm:max-w-md">
           <svg
             className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400"
             width="16"
@@ -236,7 +236,7 @@ export default function ManageArticlePage() {
         <button
           type="button"
           onClick={() => setShowCreateModal(true)}
-          className="flex h-9 items-center justify-center gap-2 rounded-lg bg-orange-800 px-4 text-sm font-bold text-white transition hover:bg-orange-700"
+          className="flex h-9 w-full shrink-0 items-center justify-center gap-2 rounded-lg bg-orange-800 px-4 text-sm font-bold text-white transition hover:bg-orange-700 sm:w-auto"
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path
@@ -252,13 +252,13 @@ export default function ManageArticlePage() {
       </div>
 
       {/* Category Tabs */}
-      <div className="flex justify-center gap-1 overflow-x-auto rounded-2xl bg-red-50 p-1">
+      <div className="grid grid-cols-2 gap-2 rounded-2xl bg-red-50 p-2 sm:flex sm:justify-center sm:gap-1 sm:p-1">
         {CATEGORIES.map((cat) => (
           <button
             key={cat.key}
             type="button"
             onClick={() => setActiveCategory(cat.key)}
-            className={`relative flex h-7 shrink-0 items-center justify-center gap-2 rounded-xl px-4 text-sm font-bold transition-all duration-200 ${
+            className={`relative flex h-9 shrink-0 items-center justify-center gap-2 rounded-xl px-3 text-sm font-bold transition-all duration-200 sm:h-7 sm:px-4 ${
               activeCategory === cat.key
                 ? "bg-white text-orange-800 shadow-sm"
                 : "text-neutral-500 hover:text-neutral-800"
@@ -277,7 +277,7 @@ export default function ManageArticlePage() {
       </div>
 
       {/* Article List */}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-3 sm:gap-4">
         {filteredArticles.length === 0 ? (
           <div className="flex w-full flex-col items-center justify-center gap-3 py-12">
             <svg

@@ -125,52 +125,53 @@ function ProductCard({
   onDelete: () => void;
 }) {
   return (
-    <div className="w-64 overflow-hidden rounded-[10px] bg-white shadow-[0px_4px_8px_0px_rgba(0,0,0,0.12)]">
+    <div className="w-full overflow-hidden rounded-[10px] bg-white shadow-[0px_4px_8px_0px_rgba(0,0,0,0.12)] md:w-64">
       {/* Image - top-left aligned */}
-      <div className="relative h-56 overflow-hidden rounded-[10px] bg-red-50">
+      <div className="relative h-32 overflow-hidden rounded-[10px] bg-red-50 md:h-56">
         <Image
           src={product.images[0] || "/images/placeholder.png"}
           alt={product.name}
           fill
+          sizes="(max-width: 768px) 260px, 256px"
           className="object-cover object-left-top"
         />
       </div>
 
       {/* Description */}
-      <div className="flex flex-col gap-[5px] p-4">
+      <div className="flex flex-col gap-1.5 p-3 md:gap-[5px] md:p-4">
         {/* Badges */}
-        <div className="flex flex-wrap items-center gap-[5px]">
+        <div className="flex flex-wrap items-center gap-1 md:gap-[5px]">
           {product.badges.includes("trending") && (
-            <span className="inline-flex h-5 items-center justify-center rounded-sm bg-orange-800 px-2 text-xs font-bold text-white">
+            <span className="inline-flex h-5 items-center justify-center rounded-sm bg-orange-800 px-1.5 text-[10px] font-bold text-white md:px-2 md:text-xs">
               Trending
             </span>
           )}
           {product.badges.includes("brandNew") && (
-            <span className="inline-flex h-5 items-center justify-center rounded-sm bg-orange-300 px-2 text-xs font-bold text-red-800">
+            <span className="inline-flex h-5 items-center justify-center rounded-sm bg-orange-300 px-1.5 text-[10px] font-bold text-red-800 md:px-2 md:text-xs">
               Brand New
             </span>
           )}
           {product.badges.includes("topSelling") && (
-            <span className="inline-flex h-5 items-center justify-center rounded-sm bg-teal-300 px-2 text-xs font-bold text-red-800">
+            <span className="inline-flex h-5 items-center justify-center rounded-sm bg-teal-300 px-1.5 text-[10px] font-bold text-red-800 md:px-2 md:text-xs">
               Top Selling
             </span>
           )}
           {product.sizes.length > 0 && (
-            <span className="inline-flex h-5 items-center justify-center rounded-sm bg-teal-300 px-2 text-xs font-bold text-red-800">
+            <span className="inline-flex h-5 items-center justify-center rounded-sm bg-teal-300 px-1.5 text-[10px] font-bold text-red-800 md:px-2 md:text-xs">
               {product.sizes.join(", ")}
             </span>
           )}
         </div>
 
         {/* Title */}
-        <div className="h-9">
-          <p className="line-clamp-2 text-sm font-bold leading-[18px] text-black">
+        <div className="min-h-[2.25rem] md:h-9">
+          <p className="line-clamp-2 text-xs font-bold leading-4 text-black md:text-sm md:leading-[18px]">
             {product.name}
           </p>
         </div>
 
         {/* Price */}
-        <div className="flex flex-col gap-[5px]">
+        <div className="flex flex-col gap-1 md:gap-[5px]">
           <span className="text-sm font-bold leading-4 text-orange-800">
             {formatPrice(product.price)}
           </span>
@@ -181,11 +182,11 @@ function ProductCard({
       </div>
 
       {/* Action Buttons */}
-      <div className="flex flex-col gap-2 px-4 pb-4">
+      <div className="flex flex-col gap-2 p-3 pt-0 md:px-4 md:pb-4">
         <button
           type="button"
           onClick={onDelete}
-          className="flex h-8 w-full items-center justify-center gap-2 rounded-lg border border-red-200 bg-white text-sm font-bold text-red-600 transition hover:bg-red-50"
+          className="flex h-8 w-full items-center justify-center gap-1.5 rounded-lg border border-red-200 bg-white text-xs font-bold text-red-600 transition hover:bg-red-50 md:gap-2 md:text-sm"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path
@@ -201,7 +202,7 @@ function ProductCard({
         <button
           type="button"
           onClick={onEdit}
-          className="flex h-8 w-full items-center justify-center gap-2 rounded-lg border border-black/10 bg-white text-sm font-bold text-neutral-950 transition hover:bg-zinc-50"
+          className="flex h-8 w-full items-center justify-center gap-1.5 rounded-lg border border-black/10 bg-white text-xs font-bold text-neutral-950 transition hover:bg-zinc-50 md:gap-2 md:text-sm"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
             <path
@@ -253,11 +254,11 @@ export default function ManageProductPage() {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4 sm:gap-6">
       {/* Header Actions */}
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         {/* Search */}
-        <div className="relative flex-1 lg:max-w-md">
+        <div className="relative w-full sm:flex-1 sm:max-w-md">
           <svg
             className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400"
             width="16"
@@ -286,7 +287,7 @@ export default function ManageProductPage() {
         <button
           type="button"
           onClick={() => setShowCreateModal(true)}
-          className="flex h-9 items-center justify-center gap-2 rounded-lg bg-orange-800 px-4 text-sm font-bold text-white transition hover:bg-orange-700"
+          className="flex h-9 w-full shrink-0 items-center justify-center gap-2 rounded-lg bg-orange-800 px-4 text-sm font-bold text-white transition hover:bg-orange-700 sm:w-auto"
         >
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path
@@ -302,13 +303,13 @@ export default function ManageProductPage() {
       </div>
 
       {/* Tab List */}
-      <div className="flex justify-center gap-1 overflow-x-auto rounded-2xl bg-red-50 p-1">
+      <div className="grid grid-cols-2 gap-2 rounded-2xl bg-red-50 p-2 sm:flex sm:justify-center sm:gap-1 sm:p-1">
         {TABS.map((tab) => (
           <button
             key={tab.key}
             type="button"
             onClick={() => setActiveTab(tab.key)}
-            className={`relative flex h-7 min-w-[120px] shrink-0 items-center justify-center gap-2 rounded-xl px-4 text-sm font-bold transition-all duration-200 ${
+            className={`relative flex h-9 shrink-0 items-center justify-center gap-2 rounded-xl px-3 text-sm font-bold transition-all duration-200 sm:h-7 sm:min-w-[120px] sm:px-4 ${
               activeTab === tab.key
                 ? "bg-white text-orange-800 shadow-sm"
                 : "text-neutral-500 hover:text-neutral-800"
@@ -327,7 +328,7 @@ export default function ManageProductPage() {
       </div>
 
       {/* Product Grid */}
-      <div className="flex flex-wrap justify-center gap-5">
+      <div className="grid grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:justify-center sm:gap-5">
         {filteredProducts.length === 0 ? (
           <div className="flex w-full flex-col items-center justify-center gap-3 py-12">
             <svg
